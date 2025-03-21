@@ -1,0 +1,32 @@
+version: "3.9"
+services:
+  nginx:
+    build: ./nginx/
+    ports:
+      - 8080:8080
+
+    volumes:
+      - ./php/:/var/www/html/
+
+  php:
+    build: ./php/
+    expose:
+      - 9000
+    volumes:
+      - ./php/:/var/www/html/
+    develop:
+      watch:
+        - action: sync
+          path: ./php/
+          target: /var/www/html/
+
+  db:
+    image: mariadb
+    volumes:
+      - mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: mariadb
+      MYSQL_DATABASE: ecomdb
+
+volumes:
+  mysql-data:

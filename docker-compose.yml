@@ -8,15 +8,21 @@ services:
       - ./php/:/var/www/html/
 
   php:
-    build: ./php/
+    build: ./
     expose:
       - 9000
     volumes:
-      - ./php/:/var/www/html/
+      - ./src/:/var/www/html/
     develop:
       watch:
         - action: sync
-          path: ./php/
+          path: ./src/
+          target: /var/www/html/
+        - action: rebuild
+          path: ./composer.json
+          target: /var/www/html/
+        - action: rebuild
+          path: ./composer.lock
           target: /var/www/html/
 
   db:

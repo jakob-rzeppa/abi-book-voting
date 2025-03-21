@@ -1,0 +1,18 @@
+{
+    "name": "jakobrzeppa/abi-book-voting",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Jakobrzeppa\\AbiBookVoting\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "jakob-rzeppa",
+            "email": "rzeppa.jakob@gmail.com"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.9"
+    }
+}

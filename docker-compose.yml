@@ -16,16 +16,19 @@ services:
     develop:
       watch:
         - action: sync
-          path: ./php/
+          path: ./php/src/
+          target: /var/www/html/
+        - action: rebuild
+          path: ./php/composer.json
           target: /var/www/html/
 
-  db:
-    image: mariadb
-    volumes:
-      - mysql-data:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: mariadb
-      MYSQL_DATABASE: ecomdb
+#   db:
+#     image: mariadb
+#     volumes:
+#       - mysql-data:/var/lib/mysql
+#     environment:
+#       MYSQL_ROOT_PASSWORD: mariadb
+#       MYSQL_DATABASE: ecomdb
 
-volumes:
-  mysql-data:
+# volumes:
+#   mysql-data:

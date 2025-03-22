@@ -23,13 +23,17 @@ services:
           path: composer.lock
           target: /var/www/html/
 
-#   db:
-#     image: mariadb
-#     volumes:
-#       - mysql-data:/var/lib/mysql
-#     environment:
-#       MYSQL_ROOT_PASSWORD: mariadb
-#       MYSQL_DATABASE: ecomdb
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: jhajfvnakjeioafjo
+      MYSQL_DATABASE: mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - mysql_network
 
-# volumes:
-#   mysql-data:
+networks:
+  mysql_network:
+    driver: bridge

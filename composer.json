@@ -1,0 +1,15 @@
+{
+    "name": "jakobrzeppa/abi-book-voting",
+    "autoload": {
+        "psr-4": {
+            "Jakobrzeppa\\AbiBookVoting\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "jakob-rzeppa",
+            "email": "rzeppa.jakob@gmail.com"
+        }
+    ],
+    "require": {}
+}

@@ -11,6 +11,7 @@ RUN docker-php-ext-install zip
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 RUN composer self-update
 
+COPY src /var/www/html
 COPY composer.json /var/www/html/composer.json
 COPY composer.lock /var/www/html/composer.lock
 

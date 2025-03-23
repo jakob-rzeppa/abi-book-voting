@@ -4,7 +4,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 require_once 'vendor/autoload.php';
 
-function sendEmail($address)
+function sendEmail($address, $message)
 {
     $send = false;
 
@@ -16,7 +16,7 @@ function sendEmail($address)
     $mail->Mailer = "smtp";
     $mail->Port = 587;
     $mail->Username = "abiigsff2025@gmail.com";
-    // $mail->Password = "";
+    $mail->Password = "gzjm vtuw yelf qlhc";
 
     //sender information
     $mail->setFrom('abiigsff2025@gmail.com', 'abi-2025-igsff');
@@ -27,7 +27,7 @@ function sendEmail($address)
     $mail->isHTML(false);
 
     $mail->Subject = 'Abi Buch Abstimmungen';
-    $mail->Body    = "Clicke auf diesen Link, um an der Abstimmung teilzunehmen";
+    $mail->Body    = $message;
 
     // Attempt to send the email
     if (!$mail->send()) {

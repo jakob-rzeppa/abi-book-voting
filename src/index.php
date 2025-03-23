@@ -14,7 +14,7 @@
         <input type="submit" value="Send Email">
     </form>
     <?php
-    // include 'send_email.php';
+    include 'sendEmail.php';
     include 'db.php';
 
     $email = $_POST['email'];
@@ -44,7 +44,9 @@
             $hashedId = getHashedIdByEmail($email);
         }
 
-        // $send = sendEmail($email);
+        $message = "Bitte clicke auf den folgenden Link um für dein Abi Buch abzustimmen: http://localhost:8080/vote.php?id=$hashedId";
+
+        $send = sendEmail($email, $message);
 
         if ($send) {
             echo 'Email wurde versendet. Bitte überprüfe dein Postfach und Spam-Ordner';

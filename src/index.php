@@ -14,7 +14,8 @@
         <input type="submit" value="Send Email">
     </form>
     <?php
-    include 'send_email.php';
+    // include 'send_email.php';
+    include 'db.php';
 
     $email = $_POST['email'];
 
@@ -34,7 +35,16 @@
             exit;
         }
 
-        $send = sendEmail($email);
+        createUserTable();
+
+        $hashedId = getHashedIdByEmail($email);
+
+        if (!$hashedId) {
+            insertUser($email);
+            $hashedId = getHashedIdByEmail($email);
+        }
+
+        // $send = sendEmail($email);
 
         if ($send) {
             echo 'Email wurde versendet. Bitte überprüfe dein Postfach und Spam-Ordner';

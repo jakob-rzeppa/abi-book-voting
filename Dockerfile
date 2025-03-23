@@ -7,6 +7,9 @@ RUN apt-get update && apt-get install -y \
     unzip
 RUN docker-php-ext-install zip
 
+RUN docker-php-ext-install mysqli
+RUN docker-php-ext-install pdo_mysql
+
 # INSTALL AND UPDATE COMPOSER
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 RUN composer self-update

@@ -4,9 +4,6 @@ services:
     ports:
       - 8080:8080
 
-    volumes:
-      - ./src/:/var/www/html/
-
   php:
     build: .
     expose:
@@ -23,17 +20,13 @@ services:
           path: composer.lock
           target: /var/www/html/
 
-  mysql:
+  db:
     image: mysql:latest
-    container_name: mysql
+    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: jhajfvnakjeioafjo
-      MYSQL_DATABASE: mysql
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'kejaffkjekjsas'
+      MYSQL_ROOT_PASSWORD: 'hafuheijkcnvjwah'
     ports:
-      - "3306:3306"
-    networks:
-      - mysql_network
-
-networks:
-  mysql_network:
-    driver: bridge
+      - '3306:3306'

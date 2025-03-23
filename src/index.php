@@ -35,6 +35,7 @@
             exit;
         }
 
+        // CREATE IF NOT EXISTS
         createUserTable();
 
         $hashedId = getHashedIdByEmail($email);
@@ -42,6 +43,11 @@
         if (!$hashedId) {
             insertUser($email);
             $hashedId = getHashedIdByEmail($email);
+        }
+
+        if (getHasVotedByHashedId($hashedId)) {
+            echo 'Du hast bereits abgestimmt';
+            exit;
         }
 
         $message = "Bitte clicke auf den folgenden Link um für dein Abi Buch abzustimmen: http://localhost:8080/vote.php?id=$hashedId";

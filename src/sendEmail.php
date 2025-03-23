@@ -16,7 +16,7 @@ function sendEmail($address, $message)
     $mail->Mailer = "smtp";
     $mail->Port = 587;
     $mail->Username = "abiigsff2025@gmail.com";
-    $mail->Password = "gzjm vtuw yelf qlhc";
+    // $mail->Password = "";
 
     //sender information
     $mail->setFrom('abiigsff2025@gmail.com', 'abi-2025-igsff');

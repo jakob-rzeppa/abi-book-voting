@@ -15,7 +15,7 @@
     </form>
     <?php
     include 'sendEmail.php';
-    include 'db.php';
+    include 'userDb.php';
 
     $email = $_POST['email'];
 

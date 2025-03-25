@@ -85,7 +85,7 @@
         <div class="message">
             <?php
             include 'sendEmail.php';
-            include 'userDb.php';
+            include 'db/userDb.php';
 
             $email = $_POST['email'];
 

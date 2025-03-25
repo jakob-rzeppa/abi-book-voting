@@ -13,6 +13,7 @@
         <input type="email" id="email" name="email">
         <input type="submit" value="Send Email">
     </form>
+    <a href="admin.php">Admin Panel</a>
     <?php
     include 'sendEmail.php';
     include 'userDb.php';

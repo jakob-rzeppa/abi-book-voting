@@ -90,7 +90,8 @@ session_start();
 <body>
     <div class="container">
         <?php if ($_SESSION['admin_password'] === 'admin') {
-            include 'db/adminDb.php';
+            include 'db/questionDb.php';
+            include 'db/studentDb.php';
 
             createQuestionTable();
             createStudentTable();

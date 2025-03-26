@@ -7,13 +7,16 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Abi Buch Abstimmung</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
+            max-width: 100%;
+            margin: auto;
+            padding: 10px;
         }
 
         h1 {
@@ -120,12 +123,13 @@ session_start();
     ?>
 
         <h1> Abstimmung </h1>
-        <p>Hallo <?php echo str_replace('.', ' ', strstr($user['email'], '@', true)) ?>, hier kannst du für das Abi Buch Abstimmen. Deine Abstimmung ist final und kann nicht geändert werden. Das liegt daran, dass die Daten anonym gespeichert werden und so nicht wieder zurück genommen werden können. Nach dem Abschicken einer Frage wirst du direkt zur nächsten geleitet. Du kannst jederzeit pausieren und mit dem gleichen Link weitermachen. Bei Fragen gerne an Jakob (jakob.rzeppa@igsff-bs.de) wenden. Vielen Dank für die Teilnahme.</p>
+
 
         <?php if ($questionsToVote[0] == null) { ?>
             <p>Es gibt keine Fragen mehr zum Abstimmen. Vielen Dank für die Teilnahme!</p>
         <?php } else { ?>
             <form action="vote.php" method="post">
+                <p>Hallo <?php echo str_replace('.', ' ', strstr($user['email'], '@', true)) ?>, hier kannst du für das Abi Buch Abstimmen. Abstimmungen werden nicht in Verbindung mit deiner Person gespeichert. Bei Fragen gerne an Jakob (jakob.rzeppa@igsff-bs.de) wenden. Vielen Dank für die Teilnahme.</p>
                 <h2><?php echo $questionsToVote[0]['question'] ?></h2>
                 <?php
                 include 'db/studentDb.php';

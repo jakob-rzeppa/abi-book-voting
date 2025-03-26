@@ -6,7 +6,7 @@ function getUserByHashedId($hashedId)
 {
     global $conn;
 
-    $sql = "SELECT * FROM users WHERE MD5(id)='$hashedId'";
+    $sql = "SELECT * FROM user WHERE MD5(id)='$hashedId'";
 
     $stmt = $conn->prepare($sql);
     $stmt->execute();
@@ -18,7 +18,7 @@ function getHasVotedByHashedId($hashedId)
 {
     global $conn;
 
-    $sql = "SELECT voted FROM users WHERE MD5(id)='$hashedId'";
+    $sql = "SELECT voted FROM user WHERE MD5(id)='$hashedId'";
 
     $stmt = $conn->prepare($sql);
     $stmt->execute();
@@ -30,7 +30,7 @@ function getHashedIdByEmail($email)
 {
     global $conn;
 
-    $sql = "SELECT MD5(id) FROM users WHERE email='$email'";
+    $sql = "SELECT MD5(id) FROM user WHERE email='$email'";
 
     $stmt = $conn->prepare($sql);
     $stmt->execute();
@@ -42,7 +42,7 @@ function insertUser($email)
 {
     global $conn;
 
-    $sql = "INSERT INTO users (email) VALUES ('$email')";
+    $sql = "INSERT INTO user (email) VALUES ('$email')";
 
     $conn->exec($sql);
 }

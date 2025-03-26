@@ -39,12 +39,10 @@ function createUserTable()
 {
     global $conn;
 
-    $sql = "CREATE TABLE IF NOT EXISTS users (
+    $sql = "CREATE TABLE IF NOT EXISTS user (
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         email VARCHAR(50) NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        voted BOOLEAN DEFAULT FALSE,
-        voted_at TIMESTAMP DEFAULT NULL
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )";
 
     $conn->exec($sql);
@@ -79,3 +77,6 @@ function createVotedTable()
 
     $conn->exec($sql);
 }
+
+initDatabase();
+echo 'Database initialized successfully';

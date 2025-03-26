@@ -57,7 +57,7 @@ function createVoteTable()
     $sql = "CREATE TABLE IF NOT EXISTS vote (
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         student_id INT(6) UNSIGNED,
-        question_id INT(6) UNSIGNED,
+        question_id INT(6) UNSIGNED NOT NULL,
         FOREIGN KEY (student_id) REFERENCES student(id),
         FOREIGN KEY (question_id) REFERENCES question(id)
     )";
@@ -71,8 +71,8 @@ function createVotedTable()
 
     $sql = "CREATE TABLE IF NOT EXISTS voted (
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        user_id INT(6) UNSIGNED,
-        question_id INT(6) UNSIGNED,
+        user_id INT(6) UNSIGNED NOT NULL,
+        question_id INT(6) UNSIGNED NOT NULL,
         FOREIGN KEY (user_id) REFERENCES user(id),
         FOREIGN KEY (question_id) REFERENCES question(id)
     )";

@@ -9,6 +9,7 @@ function initDatabase()
     createUserTable();
     createVoteTable();
     createVotedTable();
+    createTeacherTable();
 }
 
 function createQuestionTable()
@@ -73,6 +74,18 @@ function createVotedTable()
         question_id INT(6) UNSIGNED,
         FOREIGN KEY (user_id) REFERENCES user(id),
         FOREIGN KEY (question_id) REFERENCES question(id)
+    )";
+
+    $conn->exec($sql);
+}
+
+function createTeacherTable()
+{
+    global $conn;
+
+    $sql = "CREATE TABLE IF NOT EXISTS teacher (
+        id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255) NOT NULL
     )";
 
     $conn->exec($sql);

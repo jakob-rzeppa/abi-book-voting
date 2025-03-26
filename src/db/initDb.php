@@ -79,6 +79,3 @@ function createVotedTable()
 
     $conn->exec($sql);
 }
-
-initDatabase();
-echo "Datenbank initialisiert";

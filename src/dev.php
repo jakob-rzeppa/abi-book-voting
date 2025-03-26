@@ -9,7 +9,7 @@
 
 <body>
     <div>
-        <h2>Tables</h2>
+        <h2>Init</h2>
         <form method="post">
             <input type="submit" name="init" value="Init Database">
         </form>
@@ -18,6 +18,17 @@
             include 'db/initDb.php';
             initDatabase();
             echo "database tables initialized";
+        }
+        ?>
+        <h2>Delete</h2>
+        <form method="post">
+            <input type="submit" name="delete" value="Delete Database">
+        </form>
+        <?php
+        if (isset($_POST['delete'])) {
+            include 'db/deleteDb.php';
+            deleteDatabaseTables();
+            echo "database tables deleted";
         }
         ?>
     </div>

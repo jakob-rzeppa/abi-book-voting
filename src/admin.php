@@ -107,7 +107,7 @@ session_start();
                         echo "Keine Fragen";
                     } else {
                         foreach ($questions as $question) {
-                            echo "<li>{$question['question']}</li>";
+                            echo "<li><strong>{$question['question']}</strong> - {$question['possible_answers']}</li>";
                         }
                     }
                     ?>

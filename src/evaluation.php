@@ -73,6 +73,7 @@
         include 'db/questionDb.php';
         include 'db/votedDb.php';
         include 'db/studentDb.php';
+        include 'db/teacherDb.php';
 
         $questions = getQuestions();
 

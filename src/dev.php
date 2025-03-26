@@ -15,6 +15,7 @@
         </form>
         <?php
         if (isset($_POST['init'])) {
+            include 'db/initDb.php';
             initDatabase();
             echo "database tables initialized";
         }

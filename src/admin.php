@@ -242,18 +242,6 @@ session_start();
                 }
                 ?>
             </div>
-            <div>
-                <h2>Tables</h2>
-                <form method="post">
-                    <input type="submit" name="init" value="Init Database">
-                </form>
-                <?php
-                if (isset($_POST['init'])) {
-                    initDatabase();
-                    echo "database tables initialized";
-                }
-                ?>
-            </div>
         <?php } else { ?>
             <form action="admin.php" method="post">
                 <input type="password" name="password" id="password" placeholder="Password">

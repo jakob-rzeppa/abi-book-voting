@@ -8,6 +8,7 @@ services:
     build: .
     expose:
       - 9000
+    env_file: ".env"
     develop:
       watch:
         - action: sync

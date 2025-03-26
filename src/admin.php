@@ -206,7 +206,7 @@ session_start();
         <?php } ?>
 
         <?php
-        if ($_POST['password'] === 'admin') {
+        if ($_POST['password'] === $_ENV['ADMIN_PASSWORD']) {
             $_SESSION['admin_password'] = $_POST['password'];
             unset($_POST['password']);
             echo "<meta http-equiv='refresh' content='0'>";

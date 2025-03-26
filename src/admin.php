@@ -92,9 +92,7 @@ session_start();
         <?php if ($_SESSION['admin_password'] === 'admin') {
             include 'db/questionDb.php';
             include 'db/studentDb.php';
-
-            createQuestionTable();
-            createStudentTable();
+            include 'db/initDb.php';
         ?>
             <h1>Admin Panel</h1>
             <a href="index.php">Zurück</a><br>
@@ -198,8 +196,8 @@ session_start();
         <?php
         if ($_POST['password'] === 'admin') {
             $_SESSION['admin_password'] = $_POST['password'];
-            echo $_SESSION['admin_password'];
             unset($_POST['password']);
+            echo "<meta http-equiv='refresh' content='0'>";
         }
         ?>
     </div>

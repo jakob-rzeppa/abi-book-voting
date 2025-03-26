@@ -2,18 +2,6 @@
 
 include 'db.php';
 
-function createQuestionTable()
-{
-    global $conn;
-
-    $sql = "CREATE TABLE IF NOT EXISTS question (
-        id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        question TEXT NOT NULL
-    )";
-
-    $conn->exec($sql);
-}
-
 function getQuestions()
 {
     global $conn;

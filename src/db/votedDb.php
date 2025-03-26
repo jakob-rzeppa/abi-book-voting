@@ -2,21 +2,6 @@
 
 include 'db.php';
 
-function createVotedTable()
-{
-    global $conn;
-
-    $sql = "CREATE TABLE IF NOT EXISTS voted (
-        id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        user_id INT(6) UNSIGNED,
-        question_id INT(6) UNSIGNED,
-        FOREIGN KEY (user_id) REFERENCES users(id),
-        FOREIGN KEY (question_id) REFERENCES question(id)
-    )";
-
-    $conn->exec($sql);
-}
-
 function insertVoted($user_id, $question_id)
 {
     global $conn;

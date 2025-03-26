@@ -105,9 +105,6 @@
                     exit;
                 }
 
-                // CREATE IF NOT EXISTS
-                createUserTable();
-
                 $hashedId = getHashedIdByEmail($email);
 
                 if (!$hashedId) {

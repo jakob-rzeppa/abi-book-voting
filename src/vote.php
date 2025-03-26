@@ -99,9 +99,6 @@ session_start();
         include 'db/questionDb.php';
         include 'db/votedDb.php';
 
-        createVotedTable();
-        createVoteTable();
-
         $user = getUserByHashedId($_SESSION['id']);
 
         if (!$user) {

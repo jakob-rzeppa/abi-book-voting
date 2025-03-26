@@ -16,9 +16,6 @@
     include 'db/votedDb.php';
     include 'db/studentDb.php';
 
-    createVotedTable();
-    createVoteTable();
-
     $questions = getQuestions();
 
     if ($questions[0] == null) {

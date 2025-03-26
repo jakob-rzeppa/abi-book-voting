@@ -89,11 +89,20 @@
                 echo '<ul>';
                 $voteCounts = [];
                 foreach ($votes as $vote) {
-                    $student = getStudent($vote['student_id']);
-                    if (isset($voteCounts[$student['name']])) {
-                        $voteCounts[$student['name']]++;
+                    if (isset($vote['student_id'])) {
+                        $student = getStudent($vote['student_id']);
+                        $name = $student['name'];
+                    } elseif (isset($vote['teacher_id'])) {
+                        $teacher = getTeacher($vote['teacher_id']);
+                        $name = $teacher['name'];
                     } else {
-                        $voteCounts[$student['name']] = 1;
+                        continue;
+                    }
+
+                    if (isset($voteCounts[$name])) {
+                        $voteCounts[$name]++;
+                    } else {
+                        $voteCounts[$name] = 1;
                     }
                 }
 

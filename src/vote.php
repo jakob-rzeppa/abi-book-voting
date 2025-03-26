@@ -133,43 +133,85 @@ session_start();
                 <h2><?php echo $questionsToVote[0]['question'] ?></h2>
                 <?php
                 include 'db/studentDb.php';
+                include 'db/teacherDb.php';
                 $students = getStudents();
+                $teachers = getTeachers();
                 ?>
-                <input type="text" id="studentSearch" placeholder="Search for a student...">
-                <select name="student" id="studentSelect">
-                    <?php foreach ($students as $student) { ?>
-                        <option value="<?php echo $student['id']; ?>"><?php echo $student['name']; ?></option>
-                    <?php } ?>
-                </select>
+                <input type="text" id="searchBar" onkeyup="filterOptions()" placeholder="Search for names..">
+                <?php if ($questionsToVote[0]['possible_answers'] == 'teachers') { ?>
+                    <select name="teacher" id="teacherSelect">
+                        <?php foreach ($teachers as $teacher) { ?>
+                            <option value="<?php echo $teacher['id']; ?>"><?php echo $teacher['name']; ?></option>
+                        <?php } ?>
+                    </select>
+                <?php } else if ($questionsToVote[0]['possible_answers'] === 'students') { ?>
+                    <select name="student" id="studentSelect">
+                        <?php foreach ($students as $student) { ?>
+                            <option value="<?php echo $student['id']; ?>"><?php echo $student['name']; ?></option>
+                        <?php } ?>
+                    </select>
+                <?php } else { ?>
+                    <select name="answer" id="answerSelect">
+                        <?php foreach ($students as $student) { ?>
+                            <option value="student:<?php echo $student['id']; ?>"><?php echo $student['name']; ?></option>
+                        <?php } ?>
+                        <?php foreach ($teachers as $teacher) { ?>
+                            <option value="teacher:<?php echo $teacher['id']; ?>"><?php echo $teacher['name']; ?></option>
+                        <?php } ?>
+                    </select>
+                <?php } ?>
 
                 <script>
-                    document.getElementById('studentSearch').addEventListener('input', function() {
-                        var searchValue = this.value.toLowerCase();
-                        var options = document.getElementById('studentSelect').options;
-                        for (var i = 0; i < options.length; i++) {
-                            var optionText = options[i].text.toLowerCase();
-                            options[i].style.display = optionText.includes(searchValue) ? '' : 'none';
+                    function filterOptions() {
+                        var input, filter, select, options, i;
+                        input = document.getElementById('searchBar');
+                        filter = input.value.toLowerCase();
+                        select = document.querySelector('select');
+                        options = select.getElementsByTagName('option');
+
+                        for (i = 0; i < options.length; i++) {
+                            txtValue = options[i].textContent || options[i].innerText;
+                            if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                                options[i].style.display = "";
+                            } else {
+                                options[i].style.display = "none";
+                            }
                         }
-                    });
+                    }
                 </script>
-                <input type="submit" value="Final Abstimmen">
+                <input type="submit" value="Abstimmen">
             </form>
         <?php } ?>
 
         <?php
 
         if (isset($_POST['student'])) {
-            insertVote($_POST['student'], $questionsToVote[0]['id']);
+            insertVote($questionsToVote[0]['id'], 'student', $_POST['student']);
             insertVoted($user['id'], $questionsToVote[0]['id']);
 
             unset($_POST['submit']);
             unset($_POST['student']);
 
             echo "<meta http-equiv='refresh' content='0'>";
+        } else if (isset($_POST['teacher'])) {
+            insertVote($questionsToVote[0]['id'], 'teacher', $_POST['teacher']);
+            insertVoted($user['id'], $questionsToVote[0]['id']);
+
+            unset($_POST['submit']);
+            unset($_POST['teacher']);
+
+            echo "<meta http-equiv='refresh' content='0'>";
+        } else if (isset($_POST['answer'])) {
+            $answer = explode(':', $_POST['answer']);
+            insertVote($questionsToVote[0]['id'], $answer[0], $answer[1]);
+            insertVoted($user['id'], $questionsToVote[0]['id']);
+
+            unset($_POST['submit']);
+            unset($_POST['answer']);
+
+            echo "<meta http-equiv='refresh' content='0'>";
         }
-
         ?>
-
     <?php } else { ?>
         <p>Du musst diese Seite über deinen Persönlichen Link aufrufen</p>
         <a href="index.php">Zurück</a>

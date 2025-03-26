@@ -14,20 +14,19 @@ function getVotes($question_id)
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function insertVote($student_id, $teacher_id, $question_id)
+function insertVote($question_id, $type, $id)
 {
     global $conn;
 
-    if ($student_id && $teacher_id) {
-        return;
-    }
-
-    if ($student_id) {
-        $sql = "INSERT INTO vote (student_id, question_id) VALUES ($student_id, $question_id)";
-    } else if ($teacher_id) {
-        $sql = "INSERT INTO vote (teacher_id, question_id) VALUES ($teacher_id, $question_id)";
-    } else {
-        return;
+    switch ($type) {
+        case 'student':
+            $sql = "INSERT INTO vote (question_id, student_id) VALUES ($question_id, $id)";
+            break;
+        case 'teacher':
+            $sql = "INSERT INTO vote (question_id, teacher_id) VALUES ($question_id, $id)";
+            break;
+        default:
+            return;
     }
 
     $conn->exec($sql);

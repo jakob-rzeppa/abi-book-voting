@@ -14,6 +14,18 @@ function createStudentTable()
     $conn->exec($sql);
 }
 
+function getStudent($id)
+{
+    global $conn;
+
+    $sql = "SELECT * FROM student WHERE id = $id";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
+}
+
 function getStudents()
 {
     global $conn;

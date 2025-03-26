@@ -18,8 +18,8 @@ function createQuestionTable()
 
     $sql = "CREATE TABLE IF NOT EXISTS question (
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        question TEXT NOT NULL
-        possible_answers ENUM('students', 'teachers', 'everyone') NOT NULL,
+        question TEXT NOT NULL,
+        possible_answers ENUM('students', 'teachers', 'everyone') NOT NULL
     )";
 
     $conn->exec($sql);

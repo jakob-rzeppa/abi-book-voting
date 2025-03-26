@@ -128,11 +128,17 @@ session_start();
                 <form method="post">
                     <label for="question">Frage</label>
                     <input type="text" name="question" id="question" placeholder="Frage">
+                    <label for="possible_answers">Mögliche Antworten</label>
+                    <select name="possible_answers" id="possible_answers">
+                        <option value="students">Schüler</option>
+                        <option value="teachers">Lehrer</option>
+                        <option value="everyone">Jeder</option>
+                    </select>
                     <input type="submit" value="Füge Frage hinzu">
                 </form>
                 <?php
                 if (isset($_POST['question'])) {
-                    insertQuestion($_POST['question']);
+                    insertQuestion($_POST['question'], $_POST['possible_answers']);
                     unset($_POST['question']);
                     echo "<meta http-equiv='refresh' content='0'>";
                 }

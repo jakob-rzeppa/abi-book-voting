@@ -14,11 +14,11 @@ function getQuestions()
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function insertQuestion($question)
+function insertQuestion($question, $possible_answers)
 {
     global $conn;
 
-    $sql = "INSERT INTO question (question) VALUES ('$question')";
+    $sql = "INSERT INTO question (question, possible_answers) VALUES ('$question', '$possible_answers')";
 
     $conn->exec($sql);
 }

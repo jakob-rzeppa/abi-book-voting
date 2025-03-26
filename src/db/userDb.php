@@ -14,18 +14,6 @@ function getUserByHashedId($hashedId)
     return $stmt->fetch();
 }
 
-function getHasVotedByHashedId($hashedId)
-{
-    global $conn;
-
-    $sql = "SELECT voted FROM user WHERE MD5(id)='$hashedId'";
-
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
-
-    return $stmt->fetchColumn();
-}
-
 function getHashedIdByEmail($email)
 {
     global $conn;

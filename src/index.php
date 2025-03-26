@@ -100,7 +100,7 @@
                     exit;
                 }
 
-                if ($email !== 'rzeppa.jakob@gmail.com') { // TODO change email address to igsff-bs.de
+                if (!preg_match('/@igsff-bs\.de$/', $email)) {
                     echo 'Du musst eine IGSFF Email Adresse verwenden';
                     exit;
                 }
@@ -110,11 +110,6 @@
                 if (!$hashedId) {
                     insertUser($email);
                     $hashedId = getHashedIdByEmail($email);
-                }
-
-                if (getHasVotedByHashedId($hashedId)) {
-                    echo 'Du hast bereits abgestimmt';
-                    exit;
                 }
 
                 $message = "Bitte clicke auf den folgenden Link um für dein Abi Buch abzustimmen: http://localhost:8080/vote.php?id=$hashedId";

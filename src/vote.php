@@ -42,10 +42,6 @@ session_start();
 
             return true;
         }));
-
-        echo '<pre>';
-        print_r($questionsToVote);
-        echo '</pre>';
     ?>
 
         <h1> Abstimmung </h1>
@@ -84,7 +80,7 @@ session_start();
         <?php
 
         if (isset($_POST['student'])) {
-            insertVote($student['id'], $questionsToVote[0]['id']);
+            insertVote($_POST['student'], $questionsToVote[0]['id']);
             insertVoted($user['id'], $questionsToVote[0]['id']);
 
             unset($_POST['submit']);

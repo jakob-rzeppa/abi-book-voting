@@ -32,9 +32,18 @@
             echo '<p>No votes for this question.</p>';
         } else {
             echo '<ul>';
+            $voteCounts = [];
             foreach ($votes as $vote) {
                 $student = getStudent($vote['student_id']);
-                echo '<li>' . htmlspecialchars($student['name']) . '</li>';
+                if (isset($voteCounts[$student['name']])) {
+                    $voteCounts[$student['name']]++;
+                } else {
+                    $voteCounts[$student['name']] = 1;
+                }
+            }
+
+            foreach ($voteCounts as $studentName => $count) {
+                echo '<li>' . htmlspecialchars($studentName) . ': ' . $count . ' votes</li>';
             }
             echo '</ul>';
         }

@@ -60,7 +60,8 @@ function createVoteTable()
         teacher_id INT(6) UNSIGNED,
         question_id INT(6) UNSIGNED NOT NULL,
         FOREIGN KEY (student_id) REFERENCES student(id),
-        FOREIGN KEY (question_id) REFERENCES question(id)
+        FOREIGN KEY (question_id) REFERENCES question(id),
+        FOREIGN KEY (teacher_id) REFERENCES teacher(id)
     )";
 
     $conn->exec($sql);

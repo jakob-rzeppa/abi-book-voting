@@ -150,7 +150,7 @@ session_start();
                             <option value="<?php echo $student['id']; ?>"><?php echo $student['name']; ?></option>
                         <?php } ?>
                     </select>
-                <?php } else { ?>
+                <?php } else if ($questionsToVote[0]['possible_answers'] === 'everyone') { ?>
                     <select name="answer" id="answerSelect">
                         <?php foreach ($students as $student) { ?>
                             <option value="student:<?php echo $student['id']; ?>"><?php echo $student['name']; ?></option>
@@ -159,6 +159,29 @@ session_start();
                             <option value="teacher:<?php echo $teacher['id']; ?>"><?php echo $teacher['name']; ?></option>
                         <?php } ?>
                     </select>
+                <?php } else if ($questionsToVote[0]['possible_answers'] === 'two_students') { ?>
+                    <select name="student_one" id="studentOneSelect">
+                        <?php foreach ($students as $student) { ?>
+                            <option value="student_one:<?php echo $student['id']; ?>"><?php echo $student['name']; ?></option>
+                        <?php } ?>
+                    </select>
+                    <select name="student_two" id="studentTwoSelect">
+                        <?php foreach ($students as $student) { ?>
+                            <option value="student_two:<?php echo $student['id']; ?>"><?php echo $student['name']; ?></option>
+                        <?php } ?>
+                    </select>
+
+                    <script>
+                        document.querySelector('form').addEventListener('submit', function(event) {
+                            var studentOneSelect = document.getElementById('studentOneSelect');
+                            var studentTwoSelect = document.getElementById('studentTwoSelect');
+
+                            if (studentOneSelect.value.split(':')[1] === studentTwoSelect.value.split(':')[1]) {
+                                event.preventDefault();
+                                alert("Die beiden Schüler müssen unterschiedlich sein.");
+                            }
+                        });
+                    </script>
                 <?php } ?>
 
                 <script>
@@ -166,17 +189,18 @@ session_start();
                         var input, filter, select, options, i;
                         input = document.getElementById('searchBar');
                         filter = input.value.toLowerCase();
-                        select = document.querySelector('select');
-                        options = select.getElementsByTagName('option');
-
-                        for (i = 0; i < options.length; i++) {
-                            txtValue = options[i].textContent || options[i].innerText;
-                            if (txtValue.toLowerCase().indexOf(filter) > -1) {
-                                options[i].style.display = "";
-                            } else {
-                                options[i].style.display = "none";
+                        select = document.querySelectorAll('select');
+                        select.forEach(function(sel) {
+                            options = sel.getElementsByTagName('option');
+                            for (i = 0; i < options.length; i++) {
+                                txtValue = options[i].textContent || options[i].innerText;
+                                if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                                    options[i].style.display = "";
+                                } else {
+                                    options[i].style.display = "none";
+                                }
                             }
-                        }
+                        });
                     }
                 </script>
                 <input type="submit" value="Abstimmen">
@@ -208,6 +232,17 @@ session_start();
 
             unset($_POST['submit']);
             unset($_POST['answer']);
+
+            echo "<meta http-equiv='refresh' content='0'>";
+        } else if (isset($_POST['student_one']) && isset($_POST['student_two'])) {
+            $answer = explode(':', $_POST['student_one']);
+            $answer2 = explode(':', $_POST['student_two']);
+            insertVote($questionsToVote[0]['id'], 'two_students', $answer[1], $answer2[1]);
+            insertVoted($user['id'], $questionsToVote[0]['id']);
+
+            unset($_POST['submit']);
+            unset($_POST['student_one']);
+            unset($_POST['student_two']);
 
             echo "<meta http-equiv='refresh' content='0'>";
         }

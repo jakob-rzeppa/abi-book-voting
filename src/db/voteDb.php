@@ -14,7 +14,7 @@ function getVotes($question_id)
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function insertVote($question_id, $type, $id)
+function insertVote($question_id, $type, $id, $id2 = null)
 {
     global $conn;
 
@@ -24,6 +24,9 @@ function insertVote($question_id, $type, $id)
             break;
         case 'teacher':
             $sql = "INSERT INTO vote (question_id, teacher_id) VALUES ($question_id, $id)";
+            break;
+        case 'two_students':
+            $sql = "INSERT INTO vote (question_id, first_student_id, second_student_id) VALUES ($question_id, $id, $id2)";
             break;
         default:
             return;

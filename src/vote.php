@@ -210,7 +210,9 @@ session_start();
         <?php
 
         if (isset($_POST['student'])) {
-            insertVote($questionsToVote[0]['id'], 'student', $_POST['student']);
+            $student = $_POST['student'];
+
+            insertVote($questionsToVote[0]['id'], 'student', $student);
             insertVoted($user['id'], $questionsToVote[0]['id']);
 
             unset($_POST['submit']);
@@ -218,7 +220,9 @@ session_start();
 
             echo "<meta http-equiv='refresh' content='0'>";
         } else if (isset($_POST['teacher'])) {
-            insertVote($questionsToVote[0]['id'], 'teacher', $_POST['teacher']);
+            $teacher = $_POST['teacher'];
+
+            insertVote($questionsToVote[0]['id'], 'teacher', $teacher);
             insertVoted($user['id'], $questionsToVote[0]['id']);
 
             unset($_POST['submit']);
@@ -227,6 +231,7 @@ session_start();
             echo "<meta http-equiv='refresh' content='0'>";
         } else if (isset($_POST['answer'])) {
             $answer = explode(':', $_POST['answer']);
+
             insertVote($questionsToVote[0]['id'], $answer[0], $answer[1]);
             insertVoted($user['id'], $questionsToVote[0]['id']);
 
@@ -237,6 +242,12 @@ session_start();
         } else if (isset($_POST['student_one']) && isset($_POST['student_two'])) {
             $answer = explode(':', $_POST['student_one']);
             $answer2 = explode(':', $_POST['student_two']);
+            if ($answer[1] === $answer2[1]) {
+                echo "<script>alert('Die beiden Schüler müssen unterschiedlich sein.');</script>";
+                echo "<meta http-equiv='refresh' content='0'>";
+                exit;
+            }
+
             insertVote($questionsToVote[0]['id'], 'two_students', $answer[1], $answer2[1]);
             insertVoted($user['id'], $questionsToVote[0]['id']);
 

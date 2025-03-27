@@ -133,6 +133,7 @@ session_start();
                         <option value="students">Schüler</option>
                         <option value="teachers">Lehrer</option>
                         <option value="everyone">Jeder</option>
+                        <option value="two_students">Zwei Schüler</option>
                     </select>
                     <input type="submit" value="Füge Frage hinzu">
                 </form>

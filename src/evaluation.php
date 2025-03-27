@@ -93,9 +93,15 @@
                     if (isset($vote['student_id'])) {
                         $student = getStudent($vote['student_id']);
                         $name = $student['name'];
-                    } elseif (isset($vote['teacher_id'])) {
+                    } else if (isset($vote['teacher_id'])) {
                         $teacher = getTeacher($vote['teacher_id']);
                         $name = $teacher['name'];
+                    } else if (isset($vote['first_student_id']) && isset($vote['second_student_id'])) {
+                        $firstStudent = getStudent($vote['first_student_id']);
+                        $secondStudent = getStudent($vote['second_student_id']);
+                        $names = [$firstStudent['name'], $secondStudent['name']];
+                        sort($names, SORT_STRING);
+                        $name = implode(' and ', $names);
                     } else {
                         continue;
                     }

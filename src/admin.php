@@ -92,12 +92,12 @@ if ($_POST['password'] === $_ENV['ADMIN_PASSWORD']) {
 
 <body>
     <div class="container">
-        <?php if ($_COOKIE['admin_password'] === 'admin') {
+        <?php if ($_COOKIE['admin_password'] === $_ENV['ADMIN_PASSWORD']) { ?>
             include 'db/questionDb.php';
             include 'db/studentDb.php';
             include 'db/teacherDb.php';
             include 'db/initDb.php';
-        ?>
+            ?>
             <h1>Admin Panel</h1>
             <a href="index.php">Zurück</a><br>
             <a href="evaluation.php">Auswertung der Abstimmungen</a>

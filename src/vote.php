@@ -1,6 +1,6 @@
 <?php
 if (isset($_GET['id'])) {
-    setcookie('id', $_GET['id'], time() + (86400 * 30), "/");
+    setcookie('user_id', $_GET['id'], time() + (86400 * 30), "/");
     header("Location: vote.php");
     exit();
 }
@@ -96,14 +96,14 @@ if (isset($_GET['id'])) {
 </head>
 
 <body>
-    <?php if (isset($_COOKIE['id'])) {
+    <?php if (isset($_COOKIE['user_id'])) {
 
         include 'db/voteDb.php';
         include 'db/userDb.php';
         include 'db/questionDb.php';
         include 'db/votedDb.php';
 
-        $user = getUserByHashedId($_COOKIE['id']);
+        $user = getUserByHashedId($_COOKIE['user_id']);
 
         if (!$user) {
             echo "<p>Nutzer nicht gefunden. Dein Link ist nicht valide! Probiere es nochmal. Falls es immer noch nicht geht nutze einen anderen Browser oder lösche deine Browserdaten (cookies).</p>";

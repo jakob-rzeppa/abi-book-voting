@@ -1,5 +1,9 @@
 <?php
-session_start();
+if (isset($_GET['id'])) {
+    setcookie('id', $_GET['id'], time() + (86400 * 30), "/");
+    header("Location: vote.php");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -92,20 +96,20 @@ session_start();
 </head>
 
 <body>
-    <?php if (isset($_GET['id']) || isset($_SESSION['id'])) {
-        if (isset($_GET['id']) && !isset($_SESSION['id'])) {
-            $_SESSION['id'] = $_GET['id'];
-        }
+    <?php if (isset($_COOKIE['id'])) {
 
         include 'db/voteDb.php';
         include 'db/userDb.php';
         include 'db/questionDb.php';
         include 'db/votedDb.php';
 
-        $user = getUserByHashedId($_SESSION['id']);
+        $user = getUserByHashedId($_COOKIE['id']);
 
         if (!$user) {
-            die('User not found');
+            echo "<p>Nutzer nicht gefunden. Dein Link ist nicht valide! Probiere es nochmal. Falls es immer noch nicht geht nutze einen anderen Browser oder lösche deine Browserdaten (cookies).</p>";
+            echo "<a href='index.php'>Neue Email bekommen</a>";
+            echo "<a href='https://www.ionos.de/digitalguide/websites/webseiten-erstellen/cookies-loeschen/' target='_blank'>Tutorial zum Cookies löschen</a>";
+            exit();
         }
 
         $questions = getQuestions();

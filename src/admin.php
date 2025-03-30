@@ -1,5 +1,8 @@
 <?php
-session_start();
+if ($_POST['password'] === $_ENV['ADMIN_PASSWORD']) {
+    setcookie('admin_password', $_POST['password'], time() + 3600, '/');
+    echo "<meta http-equiv='refresh' content='0'>";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -89,7 +92,7 @@ session_start();
 
 <body>
     <div class="container">
-        <?php if ($_SESSION['admin_password'] === 'admin') {
+        <?php if ($_COOKIE['admin_password'] === 'admin') {
             include 'db/questionDb.php';
             include 'db/studentDb.php';
             include 'db/teacherDb.php';
@@ -249,14 +252,6 @@ session_start();
                 <input type="submit" value="Login">
             </form>
         <?php } ?>
-
-        <?php
-        if ($_POST['password'] === $_ENV['ADMIN_PASSWORD']) {
-            $_SESSION['admin_password'] = $_POST['password'];
-            unset($_POST['password']);
-            echo "<meta http-equiv='refresh' content='0'>";
-        }
-        ?>
     </div>
 </body>
 

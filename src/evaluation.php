@@ -1,3 +1,9 @@
+<?php
+if ($_COOKIE['admin_password'] !== $_ENV['ADMIN_PASSWORD']) {
+    header('Location: admin.php');
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 

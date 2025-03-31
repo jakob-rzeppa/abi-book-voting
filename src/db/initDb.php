@@ -97,6 +97,62 @@ function createVotedTable()
     $conn->exec($sql);
 }
 
+function initStudentInformation()
+{
+    global $conn;
+
+    $sql = "SELECT * FROM student";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    if (empty($students)) {
+        $sql = "INSERT INTO student (name) VALUES
+        ('Anton Pietrek'),
+        ('Anton Stormanns'),
+        ('Benjamin Morbitzer'),
+        ('Caspar Beate'),
+        ('David Elias Niklasch'),
+        ('Emma Keck'),
+        ('Fred Braband'),
+        ('Jakob Rzeppa'),
+        ('Jule Carlotta Requardt'),
+        ('Klara Van der Veen'),
+        ('Konstantin Rechner'),
+        ('Leon Schmitz'),
+        ('Levi Waldmann'),
+        ('Linus Matti Rekel'),
+        ('Matti Campbell-Smith'),
+        ('Mia Rose Maaß'),
+        ('Nail Can Knipping'),
+        ('Paula Flor Stülpe'),
+        ('Quinn Anderson'),
+        ('Richard Grießhammer'),
+        ('Tobey Täubner'),
+        ('Tom Köhnecke'),
+        
+        ('Armaan-Aziz Yilmaz'),
+        ('Arthur Béla Jankowski'),
+        ('Artsiom Hryhoryev'),
+        ('Finja-Marie Dobrat'),
+        ('Finn Klages'),
+        ('Henrike Laukien'),
+        ('Marlene Bansemer'),
+        ('Nina Traut'),
+        ('Paul Rössler'),
+        ('Roven Abratis'),
+        ('Schadia Della Ventura'),
+        ('Semi Zor'),
+        ('Veikko Poppinga')";
+
+        $conn->exec($sql);
+
+        return true;
+    }
+
+    return false;
+}
+
 function initTeacherInformation()
 {
     global $conn;
@@ -107,7 +163,7 @@ function initTeacherInformation()
     $teachers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     if (empty($teachers)) {
-        $sql = "INSERT INTO teacher (name) VALUES ('Benjamin Bank'), ('Thomas Baptist'), ('Angelika Bethke'), ('André Blank'), ('Kerstin Boettger'), ('Kaja Brandenburger'), ('Sandra-Christin Draheim'), ('Tilman Eckelt'), ('Heike Exeler'), ('Gerrit Feige'), ('Lorena Feige'), ('Milena Feige'), ('Katharina Fricke-Dietrich'), ('Patrick Galke-Janßen'), ('Alexander Geiger'), ('Linda Giffhorn'), ('Felix Goltermann'), ('Dennis Graef'), ('Denise Graf'), ('Silke Graß'), ('Thorben Grote'), ('Natali Haak'), ('Robert Hain'), ('Dana Hegmann'), ('Sarah Hentschel'), ('Marc Heydecke'), ('Isabell Hildner'), ('Karoline Hill'), ('Konstantin Hilpert'), ('Eva Holste'), ('Stefanie Huhn'), ('Henner Kaatz'), ('Lisa Karstaedt'), ('Lisa Kassautzki'), ('Tina Marita Keinz'), ('Eva Kemper'), ('Gudrun Klasmeyer'), ('Isabell Kling'), ('Bettina Koeppen-Stahl'), ('Tessa Eponine Koethe'), ('Lisanne Kraeva'), ('Edith Laukien'), ('Lisa Lohrmann'), ('Tobias Lutterbeck'), ('Ute Meißner'), ('Kora Neupert'), ('Alexandra Otto-Bethe'), ('Seval Ozdogan'), ('Joerg Pinke'), ('Vivien Poppek'), ('Lena Rolfes'), ('Benjamin Sauerland'), ('Skrollan Fides Schmidt'), ('Frauke Johanna Schubert'), ('Christian Schwarz'), ('Sven Sekula'), ('Jens Siebert'), ('Louisa Singfield'), ('Julia Sittler'), ('Berret Stegemann'), ('Antje Stolpe'), ('Lina-Sophie Szczes'), ('Isabelle Theuerzeit'), ('Heide Toklu'), ('Claudia Weber'), ('Olga Weigum-Merkel'), ('Anna Zoellner')";
+        $sql = "INSERT INTO teacher (name) VALUES ('Benjamin Bank'), ('Thomas Baptist'), ('Angelika Bethke'), ('André Blank'), ('Kerstin Boettger'), ('Kaja Brandenburger'), ('Sandra-Christin Draheim'), ('Tilman Eckelt'), ('Heike Exeler'), ('Gerrit Feige'), ('Lorena Feige'), ('Milena Feige'), ('Katharina Fricke-Dietrich'), ('Patrick Galke-Janßen'), ('Alexander Geiger'), ('Linda Giffhorn'), ('Felix Goltermann'), ('Dennis Graef'), ('Denise Graf'), ('Silke Graß'), ('Thorben Grote'), ('Natali Haak'), ('Robert Hain'), ('Dana Hegmann'), ('Sarah Hentschel'), ('Marc Heydecke'), ('Isabell Hildner'), ('Karoline Hill'), ('Konstantin Hilpert'), ('Eva Holste'), ('Stefanie Huhn'), ('Henner Kaatz'), ('Lisa Karstaedt'), ('Lisa Kassautzki'), ('Tina Marita Keinz'), ('Eva Kemper'), ('Gudrun Klasmeyer'), ('Isabell Kling'), ('Bettina Koeppen-Stahl'), ('Tessa Eponine Koethe'), ('Lisanne Kraeva'), ('Edith Laukien'), ('Lisa Lohrmann'), ('Tobias Lutterbeck'), ('Ute Meißner'), ('Kora Neupert'), ('Alexandra Otto-Bethe'), ('Seval Ozdogan'), ('Joerg Pinke'), ('Vivien Poppek'), ('Lena Rolfes'), ('Benjamin Sauerland'), ('Skrollan Fides Schmidt'), ('Frauke Johanna Schubert'), ('Christian Schwarz'), ('Sven Sekula'), ('Jens Siebert'), ('Louisa Singfield'), ('Julia Sittler'), ('Berret Stegemann'), ('Antje Stolpe'), ('Lina-Sophie Szczes'), ('Isabelle Theuerzeit'), ('Heide Toklu'), ('Claudia Weber'), ('Olga Weigum-Merkel'), ('Anna Zoellner'), ('Jan-Bodo Schwehm-Ketelsen'), ('Hans Bock')";
 
         $conn->exec($sql);
 

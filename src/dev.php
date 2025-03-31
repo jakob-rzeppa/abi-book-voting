@@ -32,6 +32,19 @@
                 echo "database tables deleted";
             }
             ?>
+            <h2>Init Students</h2>
+            <form method="post">
+                <input type="submit" name="init_students" value="Init Students">
+            </form>
+            <?php
+            if (isset($_POST['init_students'])) {
+                include 'db/initDb.php';
+                if (initStudentInformation()) {
+                    echo "students initialized";
+                } else {
+                    echo "students already initialized";
+                }
+            } ?>
             <h2>Init Teachers</h2>
             <form method="post">
                 <input type="submit" name="init_teachers" value="Init Teachers">

@@ -145,7 +145,30 @@ function initStudentInformation()
         ('Roven Abratis'),
         ('Schadia Della Ventura'),
         ('Semi Zor'),
-        ('Veikko Poppinga')";
+        ('Veikko Poppinga'),
+        
+        ('Alina Redzepi'),
+        ('Aurelia-Joelle Holtegel'),
+        ('Fatma Gül Öngel'),
+        ('Frida Aimee Nickel'),
+        ('Jenny Kuhn'),
+        ('Lara Niagara Vojinovic'),
+        ('Laura-Marie Lichtenberg'),
+        ('Lia Lotte Lorenz'),
+        ('Lian Lüddeke'),
+        ('Lisa Jöhring'),
+        ('Liseli Maiwald'),
+        ('Maria Feisthauer'),
+        ('Marie Ehrhoff'),
+        ('Paul Simon Möbius'),
+        ('Sophie Jäger'),
+        ('Till Lennart Küster'),
+        ('Zoe Shadi Hoffmann'),
+        ('Jamie Onyenom'),
+        ('Roj Ali'),
+        ('Noel Bou Khalil'),
+        ('Alex Pretzsch'),
+        ('Lena Sophy Schoppe'),";
 
         $conn->exec($sql);
 

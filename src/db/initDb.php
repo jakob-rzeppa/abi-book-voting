@@ -96,3 +96,23 @@ function createVotedTable()
 
     $conn->exec($sql);
 }
+
+function initTeacherInformation()
+{
+    global $conn;
+
+    $sql = "SELECT * FROM teacher";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $teachers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    if (empty($teachers)) {
+        $sql = "INSERT INTO teacher (name) VALUES ('Benjamin Bank'), ('Thomas Baptist'), ('Angelika Bethke'), ('André Blank'), ('Kerstin Boettger'), ('Kaja Brandenburger'), ('Sandra-Christin Draheim'), ('Tilman Eckelt'), ('Heike Exeler'), ('Gerrit Feige'), ('Lorena Feige'), ('Milena Feige'), ('Katharina Fricke-Dietrich'), ('Patrick Galke-Janßen'), ('Alexander Geiger'), ('Linda Giffhorn'), ('Felix Goltermann'), ('Dennis Graef'), ('Denise Graf'), ('Silke Graß'), ('Thorben Grote'), ('Natali Haak'), ('Robert Hain'), ('Dana Hegmann'), ('Sarah Hentschel'), ('Marc Heydecke'), ('Isabell Hildner'), ('Karoline Hill'), ('Konstantin Hilpert'), ('Eva Holste'), ('Stefanie Huhn'), ('Henner Kaatz'), ('Lisa Karstaedt'), ('Lisa Kassautzki'), ('Tina Marita Keinz'), ('Eva Kemper'), ('Gudrun Klasmeyer'), ('Isabell Kling'), ('Bettina Koeppen-Stahl'), ('Tessa Eponine Koethe'), ('Lisanne Kraeva'), ('Edith Laukien'), ('Lisa Lohrmann'), ('Tobias Lutterbeck'), ('Ute Meißner'), ('Kora Neupert'), ('Alexandra Otto-Bethe'), ('Seval Ozdogan'), ('Joerg Pinke'), ('Vivien Poppek'), ('Lena Rolfes'), ('Benjamin Sauerland'), ('Skrollan Fides Schmidt'), ('Frauke Johanna Schubert'), ('Christian Schwarz'), ('Sven Sekula'), ('Jens Siebert'), ('Louisa Singfield'), ('Julia Sittler'), ('Berret Stegemann'), ('Antje Stolpe'), ('Lina-Sophie Szczes'), ('Isabelle Theuerzeit'), ('Heide Toklu'), ('Claudia Weber'), ('Olga Weigum-Merkel'), ('Anna Zoellner')";
+
+        $conn->exec($sql);
+
+        return true;
+    }
+
+    return false;
+}

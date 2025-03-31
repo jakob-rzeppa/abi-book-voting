@@ -130,6 +130,8 @@ function initStudentInformation()
         ('Richard Grießhammer'),
         ('Tobey Täubner'),
         ('Tom Köhnecke'),
+        ('Christopher Thies'),
+        ('Lennard Höppner'),
         
         ('Armaan-Aziz Yilmaz'),
         ('Arthur Béla Jankowski'),

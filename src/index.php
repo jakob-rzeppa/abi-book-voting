@@ -112,7 +112,9 @@
                     $hashedId = getHashedIdByEmail($email);
                 }
 
-                $message = "Bitte clicke auf den folgenden Link um für dein Abi Buch abzustimmen: http://localhost:8080/vote.php?id=$hashedId";
+                $url = $_ENV['EMAIL_URL'];
+
+                $message = "Bitte clicke auf den folgenden Link um für dein Abi Buch abzustimmen: $url/vote.php?id=$hashedId";
 
                 $send = sendEmail($email, $message);
 

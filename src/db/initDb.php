@@ -107,9 +107,79 @@ function initStudentInformation()
     $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     if (empty($students)) {
-        $sql = "INSERT INTO student (name) VALUES ('Anton Pietrek'), ('Anton Stormanns'), ('Benjamin Morbitzer'), ('Caspar Beate'), ('David Elias Niklasch'), ('Emma Keck'), ('Fred Braband'), ('Jakob Rzeppa'), ('Jule Carlotta Requardt'), ('Klara Van der Veen'), ('Konstantin Rechner'), ('Leon Schmitz'), ('Levi Waldmann'), ('Linus Matti Rekel'), ('Matti Campbell-Smith'), ('Mia Rose Maaß'), ('Nail Can Knipping'), ('Paula Flor Stülpe'), ('Quinn Anderson'), ('Richard Grießhammer'), ('Tobey Täubner'), ('Tom Köhnecke'), ('Christopher Thies'), ('Lennard Höppner'), ('Armaan-Aziz Yilmaz'), ('Arthur Béla Jankowski'), ('Artsiom Hryhoryev'), ('Finja-Marie Dobrat'), ('Finn Klages'), ('Henrike Laukien'), ('Marlene Bansemer'), ('Nina Traut'), ('Paul Rössler'), ('Roven Abratis'), ('Schadia Della Ventura'), ('Semi Zor'), ('Veikko Poppinga'), ('Alina Redzepi'), ('Aurelia-Joelle Holtegel'), ('Fatma Gül Öngel'), ('Frida Aimee Nickel'), ('Jenny Kuhn'), ('Lara Niagara Vojinovic'), ('Laura-Marie Lichtenberg'), ('Lia Lotte Lorenz'), ('Lian Lüddeke'), ('Lisa Jöhring'), ('Liseli Maiwald'), ('Maria Feisthauer'), ('Marie Ehrhoff'), ('Paul Simon Möbius'), ('Sophie Jäger'), ('Till Lennart Küster'), ('Zoe Shadi Hoffmann'), ('Jamie Onyenom'), ('Roj Ali'), ('Noel Bou Khalil'), ('Alex Pretzsch'), ('Lena Sophy Schoppe'), ('Helen Marie Westphal'), ('Jule Mathilde Reinhardt'), ('Lara-Sophie Mätzing'), ('Larissa Borris'), ('Rosalie Friedrich'), ('Sophie Kodoll'), ('Lara Mätzing')";
+        $students = [
+            ['Anton Pietrek'],
+            ['Anton Stormanns'],
+            ['Benjamin Morbitzer'],
+            ['Caspar Beate'],
+            ['David Elias Niklasch'],
+            ['Emma Keck'],
+            ['Fred Braband'],
+            ['Jakob Rzeppa'],
+            ['Jule Carlotta Requardt'],
+            ['Klara Van der Veen'],
+            ['Konstantin Rechner'],
+            ['Leon Schmitz'],
+            ['Levi Waldmann'],
+            ['Linus Matti Rekel'],
+            ['Matti Campbell-Smith'],
+            ['Mia Rose Maaß'],
+            ['Nail Can Knipping'],
+            ['Paula Flor Stuelpe'],
+            ['Quinn Anderson'],
+            ['Richard Grießhammer'],
+            ['Tobey Taeubner'],
+            ['Tom Koehnecke'],
+            ['Christopher Thies'],
+            ['Lennard Hoeppner'],
+            ['Armaan-Aziz Yilmaz'],
+            ['Arthur Béla Jankowski'],
+            ['Artsiom Hryhoryev'],
+            ['Finja-Marie Dobrat'],
+            ['Finn Klages'],
+            ['Henrike Laukien'],
+            ['Marlene Bansemer'],
+            ['Nina Traut'],
+            ['Paul Roessler'],
+            ['Roven Abratis'],
+            ['Schadia Della Ventura'],
+            ['Semi Zor'],
+            ['Veikko Poppinga'],
+            ['Alina Redzepi'],
+            ['Aurelia-Joelle Holtegel'],
+            ['Fatma Guel oengel'],
+            ['Frida Aimee Nickel'],
+            ['Jenny Kuhn'],
+            ['Lara Niagara Vojinovic'],
+            ['Laura-Marie Lichtenberg'],
+            ['Lia Lotte Lorenz'],
+            ['Lian Lueddeke'],
+            ['Lisa Joehring'],
+            ['Liseli Maiwald'],
+            ['Maria Feisthauer'],
+            ['Marie Ehrhoff'],
+            ['Paul Simon Moebius'],
+            ['Sophie Jaeger'],
+            ['Till Lennart Kuester'],
+            ['Zoe Shadi Hoffmann'],
+            ['Jamie Onyenom'],
+            ['Roj Ali'],
+            ['Noel Bou Khalil'],
+            ['Alex Pretzsch'],
+            ['Lena Sophy Schoppe'],
+            ['Helen Marie Westphal'],
+            ['Jule Mathilde Reinhardt'],
+            ['Lara-Sophie Maetzing'],
+            ['Larissa Borris'],
+            ['Rosalie Friedrich'],
+            ['Sophie Kodoll'],
+            ['Lara Maetzing']
+        ];
 
-        $conn->exec($sql);
+        $stmt = $conn->prepare("INSERT INTO student (name) VALUES (?)");
+        foreach ($students as $student) {
+            $stmt->execute($student);
+        }
 
         return true;
     }

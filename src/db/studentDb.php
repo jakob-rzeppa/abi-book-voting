@@ -14,6 +14,18 @@ function getStudent($id)
     return $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
 }
 
+function getStudentByName($name)
+{
+    global $conn;
+
+    $sql = "SELECT * FROM student WHERE name = '$name'";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
+}
+
 function getStudents()
 {
     global $conn;

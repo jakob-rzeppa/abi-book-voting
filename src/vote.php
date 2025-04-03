@@ -141,72 +141,39 @@ if (isset($_GET['id'])) {
                 $students = getStudents();
                 $teachers = getTeachers();
                 ?>
-                <input type="text" id="searchBar" onkeyup="filterOptions()" placeholder="Search for names..">
                 <?php if ($questionsToVote[0]['possible_answers'] == 'teachers') { ?>
-                    <select name="teacher" id="teacherSelect">
+                    <input type="text" name="teacher" list="teachers" placeholder="Lehrername" autocomplete="off">
+                    <datalist id="teachers">
                         <?php foreach ($teachers as $teacher) { ?>
-                            <option value="<?php echo $teacher['id']; ?>"><?php echo $teacher['name']; ?></option>
+                            <option value="<?php echo $teacher['name']; ?>"><?php echo $teacher['name']; ?></option>
                         <?php } ?>
-                    </select>
+                    </datalist>
                 <?php } else if ($questionsToVote[0]['possible_answers'] === 'students') { ?>
-                    <select name="student" id="studentSelect">
+                    <input type="text" name="student" list="students" placeholder="Schülername" autocomplete="off">
+                    <datalist id="students">
                         <?php foreach ($students as $student) { ?>
-                            <option value="<?php echo $student['id']; ?>"><?php echo $student['name']; ?></option>
+                            <option value="<?php echo $student['name']; ?>"><?php echo $student['name']; ?></option>
                         <?php } ?>
-                    </select>
+                    </datalist>
                 <?php } else if ($questionsToVote[0]['possible_answers'] === 'everyone') { ?>
-                    <select name="answer" id="answerSelect">
+                    <input type="text" name="answer" list="answers" placeholder="Schüler- oder Lehrername" autocomplete="off">
+                    <datalist id="answers">
                         <?php foreach ($students as $student) { ?>
-                            <option value="student:<?php echo $student['id']; ?>"><?php echo $student['name']; ?></option>
+                            <option value="<?php echo $student['name']; ?>"><?php echo $student['name']; ?></option>
                         <?php } ?>
                         <?php foreach ($teachers as $teacher) { ?>
-                            <option value="teacher:<?php echo $teacher['id']; ?>"><?php echo $teacher['name']; ?></option>
+                            <option value="<?php echo $teacher['name']; ?>"><?php echo $teacher['name']; ?></option>
                         <?php } ?>
-                    </select>
+                    </datalist>
                 <?php } else if ($questionsToVote[0]['possible_answers'] === 'two_students') { ?>
-                    <select name="student_one" id="studentOneSelect">
+                    <input type="text" name="student_one" list="students" placeholder="Schülername" autocomplete="off">
+                    <input type="text" name="student_two" list="students" placeholder="Schülername" autocomplete="off">
+                    <datalist id="students">
                         <?php foreach ($students as $student) { ?>
-                            <option value="student_one:<?php echo $student['id']; ?>"><?php echo $student['name']; ?></option>
+                            <option value="<?php echo $student['name']; ?>"><?php echo $student['name']; ?></option>
                         <?php } ?>
-                    </select>
-                    <select name="student_two" id="studentTwoSelect">
-                        <?php foreach ($students as $student) { ?>
-                            <option value="student_two:<?php echo $student['id']; ?>"><?php echo $student['name']; ?></option>
-                        <?php } ?>
-                    </select>
-
-                    <script>
-                        document.querySelector('form').addEventListener('submit', function(event) {
-                            var studentOneSelect = document.getElementById('studentOneSelect');
-                            var studentTwoSelect = document.getElementById('studentTwoSelect');
-
-                            if (studentOneSelect.value.split(':')[1] === studentTwoSelect.value.split(':')[1]) {
-                                event.preventDefault();
-                                alert("Die beiden Schüler müssen unterschiedlich sein.");
-                            }
-                        });
-                    </script>
+                    </datalist>
                 <?php } ?>
-
-                <script>
-                    function filterOptions() {
-                        var input, filter, select, options, i;
-                        input = document.getElementById('searchBar');
-                        filter = input.value.toLowerCase();
-                        select = document.querySelectorAll('select');
-                        select.forEach(function(sel) {
-                            options = sel.getElementsByTagName('option');
-                            for (i = 0; i < options.length; i++) {
-                                txtValue = options[i].textContent || options[i].innerText;
-                                if (txtValue.toLowerCase().indexOf(filter) > -1) {
-                                    options[i].style.display = "";
-                                } else {
-                                    options[i].style.display = "none";
-                                }
-                            }
-                        });
-                    }
-                </script>
                 <input type="submit" value="Abstimmen">
             </form>
         <?php } ?>
@@ -214,9 +181,16 @@ if (isset($_GET['id'])) {
         <?php
 
         if (isset($_POST['student'])) {
-            $student = $_POST['student'];
+            $studentName = $_POST['student'];
 
-            insertVote($questionsToVote[0]['id'], 'student', $student);
+            $student = getStudentByName($studentName);
+            if (!$student) {
+                echo "<script>alert('Der Schülername ist nicht korrekt.');</script>";
+                echo "<meta http-equiv='refresh' content='0'>";
+                exit();
+            }
+
+            insertVote($questionsToVote[0]['id'], 'student', $student['id']);
             insertVoted($user['id'], $questionsToVote[0]['id']);
 
             unset($_POST['submit']);
@@ -224,9 +198,16 @@ if (isset($_GET['id'])) {
 
             echo "<meta http-equiv='refresh' content='0'>";
         } else if (isset($_POST['teacher'])) {
-            $teacher = $_POST['teacher'];
+            $teacherName = $_POST['teacher'];
 
-            insertVote($questionsToVote[0]['id'], 'teacher', $teacher);
+            $teacher = getTeacherByName($teacherName);
+            if (!$teacher) {
+                echo "<script>alert('Der Lehrername ist nicht korrekt.');</script>";
+                echo "<meta http-equiv='refresh' content='0'>";
+                exit();
+            }
+
+            insertVote($questionsToVote[0]['id'], 'teacher', $teacher['id']);
             insertVoted($user['id'], $questionsToVote[0]['id']);
 
             unset($_POST['submit']);
@@ -234,9 +215,22 @@ if (isset($_GET['id'])) {
 
             echo "<meta http-equiv='refresh' content='0'>";
         } else if (isset($_POST['answer'])) {
-            $answer = explode(':', $_POST['answer']);
+            $answer = $_POST['answer'];
 
-            insertVote($questionsToVote[0]['id'], $answer[0], $answer[1]);
+            $student = getStudentByName($answer);
+            if ($student) {
+                insertVote($questionsToVote[0]['id'], 'student', $student['id']);
+            } else {
+                $teacher = getTeacherByName($answer);
+                if ($teacher) {
+                    insertVote($questionsToVote[0]['id'], 'teacher', $teacher['id']);
+                } else {
+                    echo "<script>alert('Der Name ist nicht korrekt.');</script>";
+                    echo "<meta http-equiv='refresh' content='0'>";
+                    exit();
+                }
+            }
+
             insertVoted($user['id'], $questionsToVote[0]['id']);
 
             unset($_POST['submit']);
@@ -244,15 +238,24 @@ if (isset($_GET['id'])) {
 
             echo "<meta http-equiv='refresh' content='0'>";
         } else if (isset($_POST['student_one']) && isset($_POST['student_two'])) {
-            $answer = explode(':', $_POST['student_one']);
-            $answer2 = explode(':', $_POST['student_two']);
-            if ($answer[1] === $answer2[1]) {
-                echo "<script>alert('Die beiden Schüler müssen unterschiedlich sein.');</script>";
+            $studentOneName = $_POST['student_one'];
+            $studentTwoName = $_POST['student_two'];
+
+            $studentOne = getStudentByName($studentOneName);
+            $studentTwo = getStudentByName($studentTwoName);
+
+            if (!$studentOne || !$studentTwo) {
+                echo "<script>alert('Einer der Schülernamen ist nicht korrekt.');</script>";
                 echo "<meta http-equiv='refresh' content='0'>";
-                exit;
+                exit();
+            }
+            if ($studentOne['id'] == $studentTwo['id']) {
+                echo "<script>alert('Die Schülernamen sind identisch.');</script>";
+                echo "<meta http-equiv='refresh' content='0'>";
+                exit();
             }
 
-            insertVote($questionsToVote[0]['id'], 'two_students', $answer[1], $answer2[1]);
+            insertVote($questionsToVote[0]['id'], 'two_students', $studentOne['id'], $studentTwo['id']);
             insertVoted($user['id'], $questionsToVote[0]['id']);
 
             unset($_POST['submit']);

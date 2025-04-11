@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Exception;
+
 use function App\Db\{
     getUserByHashedId,
     getQuestions,
@@ -20,6 +22,10 @@ require_once('./db/questionDb.php');
 require_once('./db/studentDb.php');
 require_once('./db/teacherDb.php');
 require_once('./db/votedDb.php');
+
+use function App\Util\sanitize;
+
+require_once('./util/sanitize.php');
 
 if (isset($_GET['id'])) {
     setcookie('user_id', $_GET['id'], time() + (86400 * 30), "/");
@@ -42,7 +48,14 @@ if (isset($_GET['id'])) {
 <body>
     <?php if (isset($_COOKIE['user_id'])) {
 
-        $user = getUserByHashedId($_COOKIE['user_id']);
+        try {
+            $userId = sanitize($_COOKIE['user_id'], 'string');
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            exit;
+        }
+
+        $user = getUserByHashedId($userId);
 
         if (!$user) {
             echo "<p>Nutzer nicht gefunden. Dein Link ist nicht valide! Probiere es nochmal. Falls es immer noch nicht geht nutze einen anderen Browser oder lösche deine Browserdaten (cookies).</p>";
@@ -120,6 +133,13 @@ if (isset($_GET['id'])) {
         if (isset($_POST['student'])) {
             $studentName = $_POST['student'];
 
+            try {
+                $studentName = sanitize($studentName, 'string');
+            } catch (Exception $e) {
+                echo $e->getMessage();
+                exit;
+            }
+
             $student = getStudentByName($studentName);
             if (!$student) {
                 echo "<script>alert('Der Schülername ist nicht korrekt.');</script>";
@@ -137,6 +157,13 @@ if (isset($_GET['id'])) {
         } else if (isset($_POST['teacher'])) {
             $teacherName = $_POST['teacher'];
 
+            try {
+                $teacherName = sanitize($teacherName, 'string');
+            } catch (Exception $e) {
+                echo $e->getMessage();
+                exit;
+            }
+
             $teacher = getTeacherByName($teacherName);
             if (!$teacher) {
                 echo "<script>alert('Der Lehrername ist nicht korrekt.');</script>";
@@ -153,6 +180,13 @@ if (isset($_GET['id'])) {
             echo "<meta http-equiv='refresh' content='0'>";
         } else if (isset($_POST['answer'])) {
             $answer = $_POST['answer'];
+
+            try {
+                $answer = sanitize($answer, 'string');
+            } catch (Exception $e) {
+                echo $e->getMessage();
+                exit;
+            }
 
             $student = getStudentByName($answer);
             if ($student) {
@@ -177,6 +211,14 @@ if (isset($_GET['id'])) {
         } else if (isset($_POST['student_one']) && isset($_POST['student_two'])) {
             $studentOneName = $_POST['student_one'];
             $studentTwoName = $_POST['student_two'];
+
+            try {
+                $studentOneName = sanitize($studentOneName, 'string');
+                $studentTwoName = sanitize($studentTwoName, 'string');
+            } catch (Exception $e) {
+                echo $e->getMessage();
+                exit;
+            }
 
             $studentOne = getStudentByName($studentOneName);
             $studentTwo = getStudentByName($studentTwoName);

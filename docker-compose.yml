@@ -20,14 +20,13 @@ services:
         - action: rebuild
           path: composer.lock
           target: /var/www/html/
+        - action: rebuild
+          path: .env
+          target: /var/www/html/
 
   db:
     image: mysql:latest
     restart: always
-    environment:
-      MYSQL_DATABASE: 'db'
-      MYSQL_USER: 'user'
-      MYSQL_PASSWORD: 'kejaffkjekjsas'
-      MYSQL_ROOT_PASSWORD: 'hafuheijkcnvjwah'
+    env_file: ".db.env"
     ports:
       - '3306:3306'

@@ -21,7 +21,7 @@ require_once('./util/sanitize.php');
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 
 <head>
     <meta charset="UTF-8">

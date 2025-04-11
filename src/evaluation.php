@@ -21,7 +21,7 @@ if ($_COOKIE['admin_password'] !== $_ENV['ADMIN_PASSWORD']) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 
 <head>
     <meta charset="UTF-8">

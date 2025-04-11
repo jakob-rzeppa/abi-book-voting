@@ -18,7 +18,7 @@ require_once('./db/teacherDb.php');
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 
 <head>
     <meta charset="UTF-8">

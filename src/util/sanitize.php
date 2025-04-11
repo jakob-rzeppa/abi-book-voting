@@ -13,7 +13,7 @@ const FILTERS = [
     'email' => FILTER_SANITIZE_EMAIL,
 ];
 
-function sanitize(string $input, array $activeFilter): string
+function sanitize(string $input, string $activeFilter): string
 {
     $filter = FILTERS[$activeFilter] ?? null;
 

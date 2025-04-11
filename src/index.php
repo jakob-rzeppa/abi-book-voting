@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Exception;
+
 use function App\Db\{
     getHashedIdByEmail,
     insertUser
@@ -11,6 +13,10 @@ use function App\Util\sendEmail;
 include('./db/connection.php');
 require_once('./db/userDb.php');
 require_once('./util/sendEmail.php');
+
+use function App\Util\sanitize;
+
+require_once('./util/sanitize.php');
 
 ?>
 
@@ -39,13 +45,16 @@ require_once('./util/sendEmail.php');
             $email = $_POST['email'];
 
             if (isset($email)) {
+
                 if (empty($email)) {
                     echo 'Bitte gib eine Email Adresse ein';
                     exit;
                 }
 
-                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                    echo 'Invalide Email Adresse';
+                try {
+                    $email = sanitize($email, 'email');
+                } catch (Exception $e) {
+                    echo $e->getMessage();
                     exit;
                 }
 

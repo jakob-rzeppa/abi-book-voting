@@ -9,11 +9,7 @@ use function App\Db\{
     getQuestions,
     getAlreadyVotedQuestions,
     getStudents,
-    getTeachers,
-    getStudentByName,
-    getTeacherByName,
-    insertVote,
-    insertVoted
+    getTeachers
 };
 
 include('./db/connection.php');
@@ -26,6 +22,15 @@ require_once('./db/votedDb.php');
 use function App\Util\sanitize;
 
 require_once('./util/sanitize.php');
+
+use function App\Util\{
+    handleStudentVote,
+    handleTeacherVote,
+    handleStudentAndTeacherVote,
+    handleTwoStudentsVote
+};
+
+require_once('./util/handleVote.php');
 
 if (isset($_GET['token'])) {
     setcookie('user_token', $_GET['token'], time() + (86400 * 30), "/");
@@ -135,111 +140,28 @@ if (isset($_GET['token'])) {
         <?php
 
         if (isset($_POST['student'])) {
-            $studentName = $_POST['student'];
-
-            try {
-                $studentName = sanitize($studentName, 'string');
-            } catch (Exception $e) {
-                echo $e->getMessage();
-                exit;
-            }
-
-            $student = getStudentByName($studentName);
-            if (!$student) {
-                echo "<script>alert('Der Schülername ist nicht korrekt.');</script>";
-                echo "<meta http-equiv='refresh' content='0'>";
-                exit();
-            }
-
-            insertVote($questionsToVote[0]['id'], 'student', $student['id']);
-            insertVoted($user['id'], $questionsToVote[0]['id']);
+            handleStudentVote($user, $questionsToVote[0], $_POST['student']);
 
             unset($_POST['submit']);
             unset($_POST['student']);
 
             echo "<meta http-equiv='refresh' content='0'>";
         } else if (isset($_POST['teacher'])) {
-            $teacherName = $_POST['teacher'];
-
-            try {
-                $teacherName = sanitize($teacherName, 'string');
-            } catch (Exception $e) {
-                echo $e->getMessage();
-                exit;
-            }
-
-            $teacher = getTeacherByName($teacherName);
-            if (!$teacher) {
-                echo "<script>alert('Der Lehrername ist nicht korrekt.');</script>";
-                echo "<meta http-equiv='refresh' content='0'>";
-                exit();
-            }
-
-            insertVote($questionsToVote[0]['id'], 'teacher', $teacher['id']);
-            insertVoted($user['id'], $questionsToVote[0]['id']);
+            handleTeacherVote($user, $questionsToVote[0], $_POST['teacher']);
 
             unset($_POST['submit']);
             unset($_POST['teacher']);
 
             echo "<meta http-equiv='refresh' content='0'>";
         } else if (isset($_POST['answer'])) {
-            $answer = $_POST['answer'];
-
-            try {
-                $answer = sanitize($answer, 'string');
-            } catch (Exception $e) {
-                echo $e->getMessage();
-                exit;
-            }
-
-            $student = getStudentByName($answer);
-            if ($student) {
-                insertVote($questionsToVote[0]['id'], 'student', $student['id']);
-            } else {
-                $teacher = getTeacherByName($answer);
-                if ($teacher) {
-                    insertVote($questionsToVote[0]['id'], 'teacher', $teacher['id']);
-                } else {
-                    echo "<script>alert('Der Name ist nicht korrekt.');</script>";
-                    echo "<meta http-equiv='refresh' content='0'>";
-                    exit();
-                }
-            }
-
-            insertVoted($user['id'], $questionsToVote[0]['id']);
+            handleStudentAndTeacherVote($user, $questionsToVote[0], $_POST['answer']);
 
             unset($_POST['submit']);
             unset($_POST['answer']);
 
             echo "<meta http-equiv='refresh' content='0'>";
         } else if (isset($_POST['student_one']) && isset($_POST['student_two'])) {
-            $studentOneName = $_POST['student_one'];
-            $studentTwoName = $_POST['student_two'];
-
-            try {
-                $studentOneName = sanitize($studentOneName, 'string');
-                $studentTwoName = sanitize($studentTwoName, 'string');
-            } catch (Exception $e) {
-                echo $e->getMessage();
-                exit;
-            }
-
-            $studentOne = getStudentByName($studentOneName);
-            $studentTwo = getStudentByName($studentTwoName);
-
-            if (!$studentOne || !$studentTwo) {
-                echo "<script>alert('Einer der Schülernamen ist nicht korrekt.');</script>";
-                echo "<meta http-equiv='refresh' content='0'>";
-                exit();
-            }
-            if ($studentOne['id'] == $studentTwo['id']) {
-                echo "<script>alert('Die Schülernamen sind identisch.');</script>";
-                echo "<meta http-equiv='refresh' content='0'>";
-                exit();
-            }
-
-            insertVote($questionsToVote[0]['id'], 'two_students', $studentOne['id'], $studentTwo['id']);
-            insertVoted($user['id'], $questionsToVote[0]['id']);
+            handleTwoStudentsVote($user, $questionsToVote[0]);
 
             unset($_POST['submit']);
             unset($_POST['student_one']);

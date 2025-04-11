@@ -1,6 +1,6 @@
 <?php
 
-include 'db.php';
+namespace App\Db;
 
 function getQuestions()
 {
@@ -11,7 +11,7 @@ function getQuestions()
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $stmt->fetchAll(\PDO::FETCH_ASSOC);
 }
 
 function insertQuestion($question, $possible_answers)

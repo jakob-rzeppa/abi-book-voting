@@ -1,3 +1,15 @@
+<?php
+
+namespace App;
+
+use function App\Db\{
+    getHashedIdByEmail,
+    insertUser
+};
+use function App\Util\sendEmail;
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -84,9 +96,6 @@
         <a href="admin.php">Admin Panel</a>
         <div class="message">
             <?php
-            include 'sendEmail.php';
-            include 'db/userDb.php';
-
             $email = $_POST['email'];
 
             if (isset($email)) {

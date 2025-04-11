@@ -1,3 +1,16 @@
+<?php
+
+namespace App;
+
+use function App\Db\{
+    deleteDatabaseTables,
+    initDatabase,
+    initStudentInformation,
+    initTeacherInformation
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

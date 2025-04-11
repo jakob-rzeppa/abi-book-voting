@@ -1,6 +1,6 @@
 <?php
 
-include 'db.php';
+namespace App\Db;
 
 function getUserByHashedId($hashedId)
 {

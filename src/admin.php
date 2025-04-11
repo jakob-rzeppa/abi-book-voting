@@ -1,4 +1,19 @@
 <?php
+
+namespace App;
+
+use function App\Db\{
+    getQuestions,
+    getStudents,
+    getTeachers,
+    insertQuestion,
+    insertStudent,
+    insertTeacher,
+    deleteQuestion,
+    deleteStudent,
+    deleteTeacher
+};
+
 if ($_POST['password'] === $_ENV['ADMIN_PASSWORD']) {
     setcookie('admin_password', $_POST['password'], time() + 3600, '/');
     echo "<meta http-equiv='refresh' content='0'>";
@@ -92,12 +107,7 @@ if ($_POST['password'] === $_ENV['ADMIN_PASSWORD']) {
 
 <body>
     <div class="container">
-        <?php if ($_COOKIE['admin_password'] === $_ENV['ADMIN_PASSWORD']) {
-            include 'db/questionDb.php';
-            include 'db/studentDb.php';
-            include 'db/teacherDb.php';
-            include 'db/initDb.php';
-        ?>
+        <?php if ($_COOKIE['admin_password'] === $_ENV['ADMIN_PASSWORD']) { ?>
             <h1>Admin Panel</h1>
             <a href="index.php">Zurück</a><br>
             <a href="evaluation.php">Auswertung der Abstimmungen</a>

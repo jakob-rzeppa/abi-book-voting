@@ -1,6 +1,6 @@
 <?php
 
-include 'db.php';
+namespace App\Db;
 
 function initDatabase()
 {
@@ -104,7 +104,7 @@ function initStudentInformation()
     $sql = "SELECT * FROM student";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
-    $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $students = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
     if (empty($students)) {
         $students = [
@@ -194,7 +194,7 @@ function initTeacherInformation()
     $sql = "SELECT * FROM teacher";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
-    $teachers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $teachers = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
     if (empty($teachers)) {
         $sql = "INSERT INTO teacher (name) VALUES ('Benjamin Bank'), ('Thomas Baptist'), ('Angelika Bethke'), ('André Blank'), ('Kerstin Boettger'), ('Kaja Brandenburger'), ('Sandra-Christin Draheim'), ('Tilman Eckelt'), ('Heike Exeler'), ('Gerrit Feige'), ('Lorena Feige'), ('Milena Feige'), ('Katharina Fricke-Dietrich'), ('Patrick Galke-Janßen'), ('Alexander Geiger'), ('Linda Giffhorn'), ('Felix Goltermann'), ('Dennis Graef'), ('Denise Graf'), ('Silke Graß'), ('Thorben Grote'), ('Natali Haak'), ('Robert Hain'), ('Dana Hegmann'), ('Sarah Hentschel'), ('Marc Heydecke'), ('Isabell Hildner'), ('Karoline Hill'), ('Konstantin Hilpert'), ('Eva Holste'), ('Stefanie Huhn'), ('Henner Kaatz'), ('Lisa Karstaedt'), ('Lisa Kassautzki'), ('Tina Marita Keinz'), ('Eva Kemper'), ('Gudrun Klasmeyer'), ('Isabell Kling'), ('Bettina Koeppen-Stahl'), ('Tessa Eponine Koethe'), ('Lisanne Kraeva'), ('Edith Laukien'), ('Lisa Lohrmann'), ('Tobias Lutterbeck'), ('Ute Meißner'), ('Kora Neupert'), ('Alexandra Otto-Bethe'), ('Seval Ozdogan'), ('Joerg Pinke'), ('Vivien Poppek'), ('Lena Rolfes'), ('Benjamin Sauerland'), ('Skrollan Fides Schmidt'), ('Frauke Johanna Schubert'), ('Christian Schwarz'), ('Sven Sekula'), ('Jens Siebert'), ('Louisa Singfield'), ('Julia Sittler'), ('Berret Stegemann'), ('Antje Stolpe'), ('Lina-Sophie Szczes'), ('Isabelle Theuerzeit'), ('Heide Toklu'), ('Claudia Weber'), ('Olga Weigum-Merkel'), ('Anna Zoellner'), ('Jan-Bodo Schwehm-Ketelsen'), ('Hans Bock')";

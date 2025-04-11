@@ -1,6 +1,6 @@
 <?php
 
-include 'db.php';
+namespace App\Db;
 
 function insertVoted($user_id, $question_id)
 {
@@ -20,5 +20,5 @@ function getAlreadyVotedQuestions($user_id)
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $stmt->fetchAll(\PDO::FETCH_ASSOC);
 }

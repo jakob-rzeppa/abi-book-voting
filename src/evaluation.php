@@ -1,4 +1,14 @@
 <?php
+
+namespace App;
+
+use function App\Db\{
+    getQuestions,
+    getVotes,
+    getStudent,
+    getTeacher
+};
+
 if ($_COOKIE['admin_password'] !== $_ENV['ADMIN_PASSWORD']) {
     header('Location: admin.php');
     exit();
@@ -75,11 +85,6 @@ if ($_COOKIE['admin_password'] !== $_ENV['ADMIN_PASSWORD']) {
     <div class="container">
         <a href="admin.php">Zurück zum Admin Panel</a>
         <?php
-        include 'db/voteDb.php';
-        include 'db/questionDb.php';
-        include 'db/votedDb.php';
-        include 'db/studentDb.php';
-        include 'db/teacherDb.php';
 
         $questions = getQuestions();
 

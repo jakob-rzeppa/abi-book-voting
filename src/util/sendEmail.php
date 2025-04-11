@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Util;
+
 use PHPMailer\PHPMailer\PHPMailer;
 
 require_once 'vendor/autoload.php';

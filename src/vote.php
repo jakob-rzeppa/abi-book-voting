@@ -1,4 +1,19 @@
 <?php
+
+namespace App;
+
+use function App\Db\{
+    getUserByHashedId,
+    getQuestions,
+    getAlreadyVotedQuestions,
+    getStudents,
+    getTeachers,
+    getStudentByName,
+    getTeacherByName,
+    insertVote,
+    insertVoted
+};
+
 if (isset($_GET['id'])) {
     setcookie('user_id', $_GET['id'], time() + (86400 * 30), "/");
     header("Location: vote.php");
@@ -98,11 +113,6 @@ if (isset($_GET['id'])) {
 <body>
     <?php if (isset($_COOKIE['user_id'])) {
 
-        include 'db/voteDb.php';
-        include 'db/userDb.php';
-        include 'db/questionDb.php';
-        include 'db/votedDb.php';
-
         $user = getUserByHashedId($_COOKIE['user_id']);
 
         if (!$user) {
@@ -136,8 +146,6 @@ if (isset($_GET['id'])) {
                 <p>Hallo <?php echo str_replace('.', ' ', strstr($user['email'], '@', true)) ?>, hier kannst du für das Abi Buch Abstimmen. Abstimmungen werden nicht in Verbindung mit deiner Person gespeichert. Bei Fragen gerne an Jakob (jakob.rzeppa@igsff-bs.de) wenden. Vielen Dank für die Teilnahme.</p>
                 <h2><?php echo $questionsToVote[0]['question'] ?></h2>
                 <?php
-                include 'db/studentDb.php';
-                include 'db/teacherDb.php';
                 $students = getStudents();
                 $teachers = getTeachers();
                 ?>

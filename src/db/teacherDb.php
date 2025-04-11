@@ -1,6 +1,6 @@
 <?php
 
-include 'db.php';
+namespace App\Db;
 
 function getTeacher($id)
 {
@@ -11,7 +11,7 @@ function getTeacher($id)
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 
-    return $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
+    return $stmt->fetchAll(\PDO::FETCH_ASSOC)[0];
 }
 
 function getTeacherByName($name)
@@ -23,7 +23,7 @@ function getTeacherByName($name)
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 
-    return $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
+    return $stmt->fetchAll(\PDO::FETCH_ASSOC)[0];
 }
 
 function getTeachers()
@@ -35,7 +35,7 @@ function getTeachers()
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $stmt->fetchAll(\PDO::FETCH_ASSOC);
 }
 
 function insertTeacher($name)

@@ -5,6 +5,10 @@ namespace App\Db;
 use PDO;
 use PDOException;
 
+use App\Errors\DbError;
+
+require_once('./errors/dbError.php');
+
 $servername = "db";
 $username = $_ENV['MYSQL_USER'];
 $password = $_ENV['MYSQL_PASSWORD'];
@@ -15,5 +19,5 @@ try {
     // set the PDO error mode to exception
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
+    throw new DbError("Connection failed: " . $e->getMessage());
 }

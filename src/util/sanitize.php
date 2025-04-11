@@ -4,6 +4,8 @@ namespace App\Util;
 
 use App\Errors\InputSanitizationError;
 
+require_once('./errors/inputSanitizationError.php');
+
 const FILTERS = [
     'string' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
     'string[]' => [

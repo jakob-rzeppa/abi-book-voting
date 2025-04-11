@@ -2,6 +2,8 @@
 
 namespace App\Db;
 
+use PDO;
+
 function insertVoted($user_id, $question_id)
 {
     global $conn;
@@ -20,5 +22,5 @@ function getAlreadyVotedQuestions($user_id)
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 
-    return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }

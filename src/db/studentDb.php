@@ -2,6 +2,8 @@
 
 namespace App\Db;
 
+use PDO;
+
 function getStudent($id)
 {
     global $conn;
@@ -11,7 +13,7 @@ function getStudent($id)
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 
-    return $stmt->fetchAll(\PDO::FETCH_ASSOC)[0];
+    return $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
 }
 
 function getStudentByName($name)
@@ -23,7 +25,7 @@ function getStudentByName($name)
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 
-    return $stmt->fetchAll(\PDO::FETCH_ASSOC)[0];
+    return $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
 }
 
 function getStudents()
@@ -35,7 +37,7 @@ function getStudents()
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 
-    return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 function insertStudent($name)

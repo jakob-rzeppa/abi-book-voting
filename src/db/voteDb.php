@@ -2,6 +2,8 @@
 
 namespace App\Db;
 
+use PDO;
+
 function getVotes($question_id)
 {
     global $conn;
@@ -11,7 +13,7 @@ function getVotes($question_id)
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 
-    return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 function insertVote($question_id, $type, $id, $id2 = null)

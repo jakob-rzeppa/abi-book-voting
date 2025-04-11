@@ -5,7 +5,7 @@ namespace App;
 use Exception;
 
 use function App\Db\{
-    getUserByHashedId,
+    getUserByToken,
     getQuestions,
     getAlreadyVotedQuestions,
     getStudents,
@@ -27,8 +27,8 @@ use function App\Util\sanitize;
 
 require_once('./util/sanitize.php');
 
-if (isset($_GET['id'])) {
-    setcookie('user_id', $_GET['id'], time() + (86400 * 30), "/");
+if (isset($_GET['token'])) {
+    setcookie('user_token', $_GET['token'], time() + (86400 * 30), "/");
     header("Location: vote.php");
     exit();
 }
@@ -46,16 +46,20 @@ if (isset($_GET['id'])) {
 </head>
 
 <body>
-    <?php if (isset($_COOKIE['user_id'])) {
+    <?php
+
+    $userToken = $_COOKIE['user_token'];
+
+    if (isset($userToken)) {
 
         try {
-            $userId = sanitize($_COOKIE['user_id'], 'string');
+            $userToken = sanitize($userToken, 'string');
         } catch (Exception $e) {
             echo $e->getMessage();
             exit;
         }
 
-        $user = getUserByHashedId($userId);
+        $user = getUserByToken($userToken);
 
         if (!$user) {
             echo "<p>Nutzer nicht gefunden. Dein Link ist nicht valide! Probiere es nochmal. Falls es immer noch nicht geht nutze einen anderen Browser oder lösche deine Browserdaten (cookies).</p>";

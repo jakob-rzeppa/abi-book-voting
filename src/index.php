@@ -6,6 +6,7 @@ use Exception;
 
 use function App\Db\{
     getHashedIdByEmail,
+    getTokenByEmail,
     insertUser
 };
 use function App\Util\sendEmail;
@@ -63,16 +64,16 @@ require_once('./util/sanitize.php');
                     exit;
                 }
 
-                $hashedId = getHashedIdByEmail($email);
+                $token = getTokenByEmail($email);
 
-                if (!$hashedId) {
+                if (!$token) {
                     insertUser($email);
-                    $hashedId = getHashedIdByEmail($email);
+                    $token = getTokenByEmail($email);
                 }
 
                 $url = $_ENV['EMAIL_URL'];
 
-                $message = "Bitte clicke auf den folgenden Link um für dein Abi Buch abzustimmen: $url/vote.php?id=$hashedId";
+                $message = "Bitte clicke auf den folgenden Link um für dein Abi Buch abzustimmen: $url/vote.php?token=$token";
 
                 $send = sendEmail($email, $message);
 

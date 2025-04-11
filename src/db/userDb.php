@@ -2,11 +2,11 @@
 
 namespace App\Db;
 
-function getUserByHashedId($hashedId)
+function getUserByToken($token)
 {
     global $conn;
 
-    $sql = "SELECT * FROM user WHERE MD5(id)='$hashedId'";
+    $sql = "SELECT * FROM user WHERE unique_token='$token'";
 
     $stmt = $conn->prepare($sql);
     $stmt->execute();
@@ -14,11 +14,11 @@ function getUserByHashedId($hashedId)
     return $stmt->fetch();
 }
 
-function getHashedIdByEmail($email)
+function getTokenByEmail($email)
 {
     global $conn;
 
-    $sql = "SELECT MD5(id) FROM user WHERE email='$email'";
+    $sql = "SELECT unique_token FROM user WHERE email='$email'";
 
     $stmt = $conn->prepare($sql);
     $stmt->execute();
@@ -30,7 +30,11 @@ function insertUser($email)
 {
     global $conn;
 
-    $sql = "INSERT INTO user (email) VALUES ('$email')";
+    do {
+        $token = bin2hex(random_bytes(25));
+    } while (getUserByToken($token));
+
+    $sql = "INSERT INTO user (email, unique_token) VALUES ('$email', '$token')";
 
     $conn->exec($sql);
 }

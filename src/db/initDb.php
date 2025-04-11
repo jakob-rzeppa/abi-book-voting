@@ -57,6 +57,7 @@ function createUserTable()
     $sql = "CREATE TABLE IF NOT EXISTS user (
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         email VARCHAR(50) NOT NULL,
+        unique_token VARCHAR(50) NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )";
 

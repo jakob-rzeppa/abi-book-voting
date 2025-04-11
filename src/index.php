@@ -5,7 +5,6 @@ namespace App;
 use Exception;
 
 use function App\Db\{
-    getHashedIdByEmail,
     getTokenByEmail,
     insertUser
 };

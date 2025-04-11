@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Exception;
+
 use function App\Db\{
     getQuestions,
     getStudents,
@@ -19,8 +21,21 @@ require_once('./db/questionDb.php');
 require_once('./db/studentDb.php');
 require_once('./db/teacherDb.php');
 
-if ($_POST['password'] === $_ENV['ADMIN_PASSWORD']) {
-    setcookie('admin_password', $_POST['password'], time() + 3600, '/');
+use function App\Util\sanitize;
+
+require_once('./util/sanitize.php');
+
+$password = $_POST['password'] ?? '';
+
+try {
+    $password = sanitize($password, 'string');
+} catch (Exception $e) {
+    echo $e->getMessage();
+    exit;
+}
+
+if ($password === $_ENV['ADMIN_PASSWORD']) {
+    setcookie('admin_password', $password, time() + 3600, '/');
     echo "<meta http-equiv='refresh' content='0'>";
 }
 ?>

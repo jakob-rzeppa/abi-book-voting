@@ -14,6 +14,13 @@ use function App\Db\{
     insertVoted
 };
 
+include('./db/connection.php');
+require_once('./db/userDb.php');
+require_once('./db/questionDb.php');
+require_once('./db/studentDb.php');
+require_once('./db/teacherDb.php');
+require_once('./db/votedDb.php');
+
 if (isset($_GET['id'])) {
     setcookie('user_id', $_GET['id'], time() + (86400 * 30), "/");
     header("Location: vote.php");

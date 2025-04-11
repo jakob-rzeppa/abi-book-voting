@@ -9,6 +9,12 @@ use function App\Db\{
     getTeacher
 };
 
+include('./db/connection.php');
+require_once('./db/questionDb.php');
+require_once('./db/voteDb.php');
+require_once('./db/studentDb.php');
+require_once('./db/teacherDb.php');
+
 if ($_COOKIE['admin_password'] !== $_ENV['ADMIN_PASSWORD']) {
     header('Location: admin.php');
     exit();

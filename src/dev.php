@@ -7,7 +7,13 @@ use function App\Db\{
     initDatabase,
     initStudentInformation,
     initTeacherInformation
-}
+};
+
+include('./db/connection.php');
+require_once('./db/initDb.php');
+require_once('./db/deleteDb.php');
+require_once('./db/studentDb.php');
+require_once('./db/teacherDb.php');
 
 ?>
 
@@ -29,7 +35,6 @@ use function App\Db\{
             </form>
             <?php
             if (isset($_POST['init'])) {
-                include 'db/initDb.php';
                 initDatabase();
                 echo "database tables initialized";
             }
@@ -40,7 +45,6 @@ use function App\Db\{
             </form>
             <?php
             if (isset($_POST['delete'])) {
-                include 'db/deleteDb.php';
                 deleteDatabaseTables();
                 echo "database tables deleted";
             }
@@ -51,7 +55,6 @@ use function App\Db\{
             </form>
             <?php
             if (isset($_POST['init_students'])) {
-                include 'db/initDb.php';
                 if (initStudentInformation()) {
                     echo "students initialized";
                 } else {
@@ -64,7 +67,6 @@ use function App\Db\{
             </form>
             <?php
             if (isset($_POST['init_teachers'])) {
-                include 'db/initDb.php';
                 if (initTeacherInformation()) {
                     echo "teachers initialized";
                 } else {

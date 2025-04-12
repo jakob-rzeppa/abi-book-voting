@@ -2,6 +2,16 @@
 
 namespace App;
 
+use Exception;
+
+use function App\Util\{
+    sanitize,
+    validateJWToken
+};
+
+require_once('./util/sanitize.php');
+require_once('./util/auth.php');
+
 use function App\Db\{
     getQuestions,
     getVotes,
@@ -14,10 +24,23 @@ require_once('./db/voteDb.php');
 require_once('./db/studentDb.php');
 require_once('./db/teacherDb.php');
 
-if ($_COOKIE['admin_password'] !== $_ENV['ADMIN_PASSWORD']) {
+if (!isset($_COOKIE['admin_token'])) {
     header('Location: admin.php');
     exit();
+} else {
+    try {
+        $adminToken = sanitize($_COOKIE['admin_token'], 'string');
+    } catch (Exception $e) {
+        echo $e->getMessage();
+        exit;
+    }
+
+    if (!validateJWToken($_COOKIE['admin_token'])) {
+        header('Location: admin.php');
+        exit();
+    }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="de">

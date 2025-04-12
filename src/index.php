@@ -8,9 +8,11 @@ use function App\Db\{
     getTokenByEmail,
     insertUser
 };
-use function App\Util\sendEmail;
 
 require_once('./db/userDb.php');
+
+use function App\Util\sendEmail;
+
 require_once('./util/sendEmail.php');
 
 use function App\Util\sanitize;
@@ -69,7 +71,7 @@ require_once('./util/sanitize.php');
                     $token = getTokenByEmail($email);
                 }
 
-                $url = $_ENV['EMAIL_URL'];
+                $url = $_ENV['SERVER_ADDRESS'];
 
                 $message = "Bitte clicke auf den folgenden Link um für dein Abi Buch abzustimmen: $url/vote.php?token=$token";
 

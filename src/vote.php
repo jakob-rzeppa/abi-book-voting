@@ -51,10 +51,9 @@ if (isset($_GET['token'])) {
 
 <body>
     <?php
+    if (isset($_COOKIE['user_token'])) {
 
-    $userToken = $_COOKIE['user_token'];
-
-    if (isset($userToken)) {
+        $userToken = $_COOKIE['user_token'];
 
         try {
             $userToken = sanitize($userToken, 'string');

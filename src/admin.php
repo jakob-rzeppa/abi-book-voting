@@ -24,9 +24,10 @@ use function App\Util\sanitize;
 
 require_once('./util/sanitize.php');
 
-$password = $_POST['admin_password'];
+if (isset($_POST['admin_password'])) {
 
-if (isset($password)) {
+    $password = $_POST['admin_password'];
+
     try {
         $password = sanitize($password, 'string');
     } catch (Exception $e) {

@@ -41,9 +41,9 @@ require_once('./util/sanitize.php');
         <a href="admin.php">Admin Panel</a>
         <div class="message">
             <?php
-            $email = $_POST['email'];
 
-            if (isset($email)) {
+            if (isset($_POST['email'])) {
+                $email = $_POST['email'];
 
                 if (empty($email)) {
                     echo 'Bitte gib eine Email Adresse ein';

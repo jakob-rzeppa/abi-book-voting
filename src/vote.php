@@ -32,7 +32,7 @@ use function App\Util\{
 require_once('./util/handleVote.php');
 
 if (isset($_GET['token'])) {
-    setcookie('user_token', $_GET['token'], time() + (86400 * 30), "/");
+    setcookie('user_token', $_GET['token'], time() + (86400 * 30), "/vote.php");
     header("Location: vote.php");
     exit();
 }
@@ -88,7 +88,7 @@ if (isset($_GET['token'])) {
         <h1> Abstimmung </h1>
 
 
-        <?php if ($questionsToVote[0] == null) { ?>
+        <?php if (!isset($questionsToVote[0])) { ?>
             <p>Es gibt keine Fragen mehr zum Abstimmen. Vielen Dank für die Teilnahme!</p>
         <?php } else { ?>
             <form action="vote.php" method="post">

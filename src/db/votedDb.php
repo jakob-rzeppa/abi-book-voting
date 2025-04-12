@@ -6,7 +6,7 @@ use PDO;
 
 use App\Db\DbConnection;
 
-require_once('src/db/dbConnection.php');
+require_once('db/dbConnection.php');
 
 function insertVoted($user_id, $question_id)
 {

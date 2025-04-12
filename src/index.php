@@ -71,7 +71,12 @@ require_once('./util/sanitize.php');
                     $token = getTokenByEmail($email);
                 }
 
-                $url = $_ENV['SERVER_ADDRESS'];
+                $url = $_ENV['SERVER_ADDRESS'] ?? null;
+
+                if (!$url) {
+                    echo 'Server Adresse ist nicht gesetzt';
+                    exit;
+                }
 
                 $message = "Bitte clicke auf den folgenden Link um für dein Abi Buch abzustimmen: $url/vote.php?token=$token";
 

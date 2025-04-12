@@ -12,7 +12,7 @@ function getQuestions()
 {
     $conn = DbConnection::getInstance()->getConnection();
 
-    $sql = "SELECT * FROM question";
+    $sql = 'SELECT * FROM question';
 
     $stmt = $conn->prepare($sql);
     $stmt->execute();
@@ -24,16 +24,19 @@ function insertQuestion($question, $possible_answers)
 {
     $conn = DbConnection::getInstance()->getConnection();
 
-    $sql = "INSERT INTO question (question, possible_answers) VALUES ('$question', '$possible_answers')";
+    $stmt = $conn->prepare('INSERT INTO question (question, possible_answers) VALUES (:question, :possible_answers)');
+    $stmt->bindParam(':question', $question);
+    $stmt->bindParam(':possible_answers', $possible_answers);
 
-    $conn->exec($sql);
+    $stmt->execute();
 }
 
 function deleteQuestion($id)
 {
     $conn = DbConnection::getInstance()->getConnection();
 
-    $sql = "DELETE FROM question WHERE id = $id";
+    $stmt = $conn->prepare('DELETE FROM vote WHERE question_id = :id');
+    $stmt->bindParam(':id', $id);
 
-    $conn->exec($sql);
+    $stmt->execute();
 }

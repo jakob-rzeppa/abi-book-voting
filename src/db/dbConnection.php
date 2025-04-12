@@ -22,7 +22,7 @@ class DbConnection
 
     private function __construct()
     {
-        $this->servername = "db";
+        $this->servername = 'db';
         $this->username = $_ENV['MYSQL_USER'];
         $this->password = $_ENV['MYSQL_PASSWORD'];
         $this->dbname = $_ENV['MYSQL_DATABASE_NAME'];
@@ -32,7 +32,7 @@ class DbConnection
             // set the PDO error mode to exception
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
-            throw new DbError("Connection failed: " . $e->getMessage());
+            throw new DbError('Connection failed: ' . $e->getMessage());
         }
     }
 

@@ -10,7 +10,7 @@ function deleteDatabaseTables()
 {
     $conn = DbConnection::getInstance()->getConnection();
 
-    $sql = "DROP TABLE IF EXISTS voted, vote, question, student, user, teacher";
+    $sql = 'DROP TABLE IF EXISTS voted, vote, question, student, user, teacher';
 
     $conn->exec($sql);
 }

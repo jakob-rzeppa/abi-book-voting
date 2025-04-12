@@ -12,18 +12,20 @@ function insertVoted($user_id, $question_id)
 {
     $conn = DbConnection::getInstance()->getConnection();
 
-    $sql = "INSERT INTO voted (user_id, question_id) VALUES ($user_id, $question_id)";
+    $stmt = $conn->prepare('INSERT INTO voted (user_id, question_id) VALUES (:user_id, :question_id)');
+    $stmt->bindParam(':user_id', $user_id);
+    $stmt->bindParam(':question_id', $question_id);
 
-    $conn->exec($sql);
+    $stmt->execute();
 }
 
 function getAlreadyVotedQuestions($user_id)
 {
     $conn = DbConnection::getInstance()->getConnection();
 
-    $sql = "SELECT question_id FROM voted WHERE user_id = $user_id";
+    $stmt = $conn->prepare('SELECT question_id FROM voted WHERE user_id = :user_id');
+    $stmt->bindParam(':user_id', $user_id);
 
-    $stmt = $conn->prepare($sql);
     $stmt->execute();
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);

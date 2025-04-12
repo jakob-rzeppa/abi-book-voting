@@ -10,9 +10,9 @@ function getUserByToken($token)
 {
     $conn = DbConnection::getInstance()->getConnection();
 
-    $sql = "SELECT * FROM user WHERE unique_token='$token'";
+    $stmt = $conn->prepare('SELECT * FROM user WHERE unique_token = :token');
+    $stmt->bindParam(':token', $token);
 
-    $stmt = $conn->prepare($sql);
     $stmt->execute();
 
     return $stmt->fetch();
@@ -22,9 +22,9 @@ function getTokenByEmail($email)
 {
     $conn = DbConnection::getInstance()->getConnection();
 
-    $sql = "SELECT unique_token FROM user WHERE email='$email'";
+    $stmt = $conn->prepare('SELECT unique_token FROM user WHERE email = :email');
+    $stmt->bindParam(':email', $email);
 
-    $stmt = $conn->prepare($sql);
     $stmt->execute();
 
     return $stmt->fetchColumn();
@@ -38,7 +38,9 @@ function insertUser($email)
         $token = bin2hex(random_bytes(25));
     } while (getUserByToken($token));
 
-    $sql = "INSERT INTO user (email, unique_token) VALUES ('$email', '$token')";
+    $stmt = $conn->prepare('INSERT INTO user (email, unique_token) VALUES (:email, :unique_token)');
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':unique_token', $token);
 
-    $conn->exec($sql);
+    $stmt->execute();
 }

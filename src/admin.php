@@ -24,19 +24,25 @@ use function App\Util\sanitize;
 
 require_once('./util/sanitize.php');
 
-$password = $_POST['password'] ?? '';
+$password = $_POST['admin_password'];
 
-try {
-    $password = sanitize($password, 'string');
-} catch (Exception $e) {
-    echo $e->getMessage();
-    exit;
+if (isset($password)) {
+    try {
+        $password = sanitize($password, 'string');
+    } catch (Exception $e) {
+        echo $e->getMessage();
+        exit;
+    }
+
+    // Sleep for 1 second to prevent brute force attacks
+    sleep(1);
+
+    if ($password === $_ENV['ADMIN_PASSWORD']) {
+        setcookie('admin_password', $password, time() + 3600, '/');
+        echo "<meta http-equiv='refresh' content='0'>";
+    }
 }
 
-if ($password === $_ENV['ADMIN_PASSWORD']) {
-    setcookie('admin_password', $password, time() + 3600, '/');
-    echo "<meta http-equiv='refresh' content='0'>";
-}
 ?>
 <!DOCTYPE html>
 <html lang="de">

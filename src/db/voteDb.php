@@ -4,9 +4,13 @@ namespace App\Db;
 
 use PDO;
 
+use App\Db\DbConnection;
+
+require_once('db/dbConnection.php');
+
 function getVotes($question_id)
 {
-    global $conn;
+    $conn = DbConnection::getInstance()->getConnection();
 
     $sql = "SELECT * FROM vote WHERE question_id = $question_id";
 
@@ -18,7 +22,7 @@ function getVotes($question_id)
 
 function insertVote($question_id, $type, $id, $id2 = null)
 {
-    global $conn;
+    $conn = DbConnection::getInstance()->getConnection();
 
     switch ($type) {
         case 'student':

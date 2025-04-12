@@ -11,7 +11,6 @@ use function App\Db\{
     insertVoted
 };
 
-include('./db/connection.php');
 require_once('./db/userDb.php');
 require_once('./db/questionDb.php');
 require_once('./db/studentDb.php');

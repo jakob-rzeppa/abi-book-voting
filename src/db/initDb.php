@@ -4,6 +4,10 @@ namespace App\Db;
 
 use PDO;
 
+use App\Db\DbConnection;
+
+require_once('db/dbConnection.php');
+
 function initDatabase()
 {
     createQuestionTable();
@@ -16,7 +20,7 @@ function initDatabase()
 
 function createQuestionTable()
 {
-    global $conn;
+    $conn = DbConnection::getInstance()->getConnection();
 
     $sql = "CREATE TABLE IF NOT EXISTS question (
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -29,7 +33,7 @@ function createQuestionTable()
 
 function createStudentTable()
 {
-    global $conn;
+    $conn = DbConnection::getInstance()->getConnection();
 
     $sql = "CREATE TABLE IF NOT EXISTS student (
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -40,7 +44,7 @@ function createStudentTable()
 }
 function createTeacherTable()
 {
-    global $conn;
+    $conn = DbConnection::getInstance()->getConnection();
 
     $sql = "CREATE TABLE IF NOT EXISTS teacher (
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -52,7 +56,7 @@ function createTeacherTable()
 
 function createUserTable()
 {
-    global $conn;
+    $conn = DbConnection::getInstance()->getConnection();
 
     $sql = "CREATE TABLE IF NOT EXISTS user (
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -66,7 +70,7 @@ function createUserTable()
 
 function createVoteTable()
 {
-    global $conn;
+    $conn = DbConnection::getInstance()->getConnection();
 
     $sql = "CREATE TABLE IF NOT EXISTS vote (
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -87,7 +91,7 @@ function createVoteTable()
 
 function createVotedTable()
 {
-    global $conn;
+    $conn = DbConnection::getInstance()->getConnection();
 
     $sql = "CREATE TABLE IF NOT EXISTS voted (
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -102,7 +106,7 @@ function createVotedTable()
 
 function initStudentInformation()
 {
-    global $conn;
+    $conn = DbConnection::getInstance()->getConnection();
 
     $sql = "SELECT * FROM student";
     $stmt = $conn->prepare($sql);
@@ -192,7 +196,7 @@ function initStudentInformation()
 
 function initTeacherInformation()
 {
-    global $conn;
+    $conn = DbConnection::getInstance()->getConnection();
 
     $sql = "SELECT * FROM teacher";
     $stmt = $conn->prepare($sql);

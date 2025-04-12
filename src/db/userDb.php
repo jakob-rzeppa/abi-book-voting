@@ -2,9 +2,13 @@
 
 namespace App\Db;
 
+use App\Db\DbConnection;
+
+require_once('db/dbConnection.php');
+
 function getUserByToken($token)
 {
-    global $conn;
+    $conn = DbConnection::getInstance()->getConnection();
 
     $sql = "SELECT * FROM user WHERE unique_token='$token'";
 
@@ -16,7 +20,7 @@ function getUserByToken($token)
 
 function getTokenByEmail($email)
 {
-    global $conn;
+    $conn = DbConnection::getInstance()->getConnection();
 
     $sql = "SELECT unique_token FROM user WHERE email='$email'";
 
@@ -28,7 +32,7 @@ function getTokenByEmail($email)
 
 function insertUser($email)
 {
-    global $conn;
+    $conn = DbConnection::getInstance()->getConnection();
 
     do {
         $token = bin2hex(random_bytes(25));

@@ -9,7 +9,6 @@ use function App\Db\{
     initTeacherInformation
 };
 
-include('./db/connection.php');
 require_once('./db/initDb.php');
 require_once('./db/deleteDb.php');
 require_once('./db/studentDb.php');

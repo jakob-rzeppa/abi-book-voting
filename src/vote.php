@@ -12,7 +12,6 @@ use function App\Db\{
     getTeachers
 };
 
-include('./db/connection.php');
 require_once('./db/userDb.php');
 require_once('./db/questionDb.php');
 require_once('./db/studentDb.php');

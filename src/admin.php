@@ -16,7 +16,6 @@ use function App\Db\{
     deleteTeacher
 };
 
-include('./db/connection.php');
 require_once('./db/questionDb.php');
 require_once('./db/studentDb.php');
 require_once('./db/teacherDb.php');

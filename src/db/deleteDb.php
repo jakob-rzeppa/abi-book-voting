@@ -2,9 +2,13 @@
 
 namespace App\Db;
 
+use App\Db\DbConnection;
+
+require_once('db/dbConnection.php');
+
 function deleteDatabaseTables()
 {
-    global $conn;
+    $conn = DbConnection::getInstance()->getConnection();
 
     $sql = "DROP TABLE IF EXISTS voted, vote, question, student, user, teacher";
 

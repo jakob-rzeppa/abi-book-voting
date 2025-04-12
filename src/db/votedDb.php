@@ -4,9 +4,13 @@ namespace App\Db;
 
 use PDO;
 
+use App\Db\DbConnection;
+
+require_once('src/db/dbConnection.php');
+
 function insertVoted($user_id, $question_id)
 {
-    global $conn;
+    $conn = DbConnection::getInstance()->getConnection();
 
     $sql = "INSERT INTO voted (user_id, question_id) VALUES ($user_id, $question_id)";
 
@@ -15,7 +19,7 @@ function insertVoted($user_id, $question_id)
 
 function getAlreadyVotedQuestions($user_id)
 {
-    global $conn;
+    $conn = DbConnection::getInstance()->getConnection();
 
     $sql = "SELECT question_id FROM voted WHERE user_id = $user_id";
 

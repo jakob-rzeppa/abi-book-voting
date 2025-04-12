@@ -4,9 +4,13 @@ namespace App\Db;
 
 use PDO;
 
+use App\Db\DbConnection;
+
+require_once('db/dbConnection.php');
+
 function getQuestions()
 {
-    global $conn;
+    $conn = DbConnection::getInstance()->getConnection();
 
     $sql = "SELECT * FROM question";
 
@@ -18,7 +22,7 @@ function getQuestions()
 
 function insertQuestion($question, $possible_answers)
 {
-    global $conn;
+    $conn = DbConnection::getInstance()->getConnection();
 
     $sql = "INSERT INTO question (question, possible_answers) VALUES ('$question', '$possible_answers')";
 
@@ -27,7 +31,7 @@ function insertQuestion($question, $possible_answers)
 
 function deleteQuestion($id)
 {
-    global $conn;
+    $conn = DbConnection::getInstance()->getConnection();
 
     $sql = "DELETE FROM question WHERE id = $id";
 

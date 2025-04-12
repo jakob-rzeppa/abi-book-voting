@@ -10,7 +10,6 @@ use function App\Db\{
 };
 use function App\Util\sendEmail;
 
-include('./db/connection.php');
 require_once('./db/userDb.php');
 require_once('./util/sendEmail.php');
 

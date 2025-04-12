@@ -4,9 +4,13 @@ namespace App\Db;
 
 use PDO;
 
+use App\Db\DbConnection;
+
+require_once('db/dbConnection.php');
+
 function getTeacher($id)
 {
-    global $conn;
+    $conn = DbConnection::getInstance()->getConnection();
 
     $sql = "SELECT * FROM teacher WHERE id = $id";
 
@@ -18,7 +22,7 @@ function getTeacher($id)
 
 function getTeacherByName($name)
 {
-    global $conn;
+    $conn = DbConnection::getInstance()->getConnection();
 
     $sql = "SELECT * FROM teacher WHERE name = '$name'";
 
@@ -30,7 +34,7 @@ function getTeacherByName($name)
 
 function getTeachers()
 {
-    global $conn;
+    $conn = DbConnection::getInstance()->getConnection();
 
     $sql = "SELECT * FROM teacher";
 
@@ -42,7 +46,7 @@ function getTeachers()
 
 function insertTeacher($name)
 {
-    global $conn;
+    $conn = DbConnection::getInstance()->getConnection();
 
     $sql = "INSERT INTO teacher (name) VALUES ('$name')";
 
@@ -51,7 +55,7 @@ function insertTeacher($name)
 
 function deleteTeacher($id)
 {
-    global $conn;
+    $conn = DbConnection::getInstance()->getConnection();
 
     $sql = "DELETE FROM teacher WHERE id = $id";
 
